@@ -8,10 +8,8 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import StratifiedKFold
 import random
 
-train_num = 2000
-vali_num = 700
 
-label, alldata = ld.get_data(6)
+label, alldata = ld.get_data(8)
 # emo_tag = allo_label(emo)
 print(alldata.shape)
 
@@ -26,7 +24,7 @@ print(label.shape)
 
 skf = StratifiedKFold(n_splits=3)
 for train, test in skf.split(data, label):
-        clf = svm.SVC(ker)
+        clf = svm.SVC()
         clf.fit(data[train,:], label[train])
         cnt = 0
         for i in test:
@@ -34,8 +32,16 @@ for train, test in skf.split(data, label):
                 cnt += 1
         print('svm accuracy: ', cnt / len(test))
 
-        rf = RandomForestClassifier()
-        rf.fit(data[0:train_num, :], label[0:train_num])
+        clf = svm.SVC(kernel = 'linear')
+        clf.fit(data[train,:], label[train])
+        cnt = 0
+        for i in test:
+            if label[i] == clf.predict(data[i, :].reshape(1, -1)):
+                cnt += 1
+        print('svm_linear accuracy: ', cnt / len(test))
+
+        rf = RandomForestClassifier(n_jobs = -1)
+        rf.fit(data[train, :], label[train])
         cnt = 0
         for i in test:
             if label[i] == rf.predict(data[i, :].reshape(1, -1)):

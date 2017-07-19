@@ -2,11 +2,12 @@ import sqlite3
 import numpy as np
 from xml.dom import minidom
 
-folder = [2,132,392,522, 782, 912,
-    1172, 1562, 1692, 1952, 2082,
-    2212, 2342, 2472, 2602, 2862,
-    2992, 3382, 3512, 3642, 3772]
+# folder = [2,132,392,522, 782, 912,
+#     1172, 1562, 1692, 1952, 2082,
+#     2212, 2342, 2472, 2602, 2862,
+#     2992, 3382, 3512, 3642, 3772]
 
+folder = [2342, 2472, 2602]
 
 def get_data(num):
     
@@ -14,20 +15,54 @@ def get_data(num):
     label = np.zeros((1,1))
     
     for i in range(0, num):
-        conn = sqlite3.connect(str(folder[i]))
+
+        conn = sqlite3.connect('./data/'+str(folder[i]))
+
+        # print('./data/'+str(folder[i]))
+        
         c = conn.cursor()
         k = 0
+        limit = 40
+        if(folder[i] == 1952):
+            limit = 32
         
-        while k < 40:
+        while k < limit:
             subdata = []
             emo, beg, end = get_label(folder[i]+k)
             for no in range(1,5):
-                sql = 'select * from emotions'+str(folder[i]+k)+'_'+str(no)+' where time<'+str(15+float(end)-float(beg))+' and time >15' 
+                # sql = 'select * from emotions'+str(folder[i]+k)+'_'+str(no)+' where time<"'+str(15+float(end)-float(beg))+'" and time>15' 
+                sql = 'select * from emotions'+str(folder[i]+k)+'_'+str(no) 
+                
                 c.execute(sql)
                 # print(sql)
                 subdata.append(c.fetchall())
+
                 subdata[no-1] = np.array(subdata[no-1])
                 # print("subdata:", subdata[no-1].shape)
+                if no == 1:
+                    per = subdata[no-1][:,1]
+                    pershape = per.shape[0]
+                    percen = per[per>'0'].shape[0] / pershape
+                    print(folder[i]+k, percen)
+
+
+
+                # time = []
+                # for t in subdata[no-1][:,0]:
+                #     time.append( float(t) )
+                # time = np.array(time)
+                # mask = time>15 
+                # # print(mask)
+                # subdata[no-1] = subdata[no-1][mask, :]
+
+                # time = []
+                # for t in subdata[no-1][:,0]:
+                #     time.append( float(t) )
+                # time = np.array(time)
+                # mask = time<float(15+end-beg) 
+                # subdata[no-1] = subdata[no-1][mask, :]
+
+
 
             size = min(subdata[0].shape[0],
                 subdata[1].shape[0],
@@ -35,13 +70,23 @@ def get_data(num):
                 subdata[3].shape[0]
             )
 
+
+
+            # print(folder[i]+k,subdata[0].shape[0],
+            #     subdata[1].shape[0],
+            #     subdata[2].shape[0],
+            #     subdata[3].shape[0]
+            # )
             # print("size", size)
             sublabel = np.ones((size,1)) * new_label(float(emo))
             # print(sublabel.shape)
             # print(label.shape)
             label = np.row_stack((label, sublabel))
-
+            print(folder[i]+k, 'size: ',size)
             temp = subdata[0][0:size, :]
+
+
+            # print(subdata[0].shape)
             # time, num, +9
 
 
@@ -51,6 +96,8 @@ def get_data(num):
         
             data = np.row_stack((data, temp))
             k += 2
+
+        conn.close()
         
 
     return np.ravel(label[1:]), data[1:,:]
@@ -67,6 +114,7 @@ def get_label(no):
 
     try:
         xmldoc = minidom.parse('./Sessions/'+str(no)+'/session.xml')
+        # print('./Sessions/'+str(no)+'/session.xml')
         sess = xmldoc.getElementsByTagName('session')
 
         for s in sess:
