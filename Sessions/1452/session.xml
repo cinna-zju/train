@@ -1,0 +1,31 @@
+<?xml version="1.0" ?>
+<session sessionId="1452" date="2009-08-26" time="11:34:19" experimentType="emotion elicitation" isStim="1" cutNr="22" cutLenSec="90.1579" vidRate="60.9708" audRate="48000" audBeginSmp="61227276.5" audEndSmp="65554856.5" vidBeginSmp="77732.5" vidEndSmp="83229.5" mediaFile="69.avi">
+    <subject id="12" hasBeard="False" hasMoustache="False" hasGlasses="False"/>
+    <track filename="P12-Rec1-2009.08.26.11.32.39_BW1 _BW_Section_22.avi" id="1452.1" type="Video" color="0" view="0" camera="2">
+         <annotation filename="P12-Rec1-All-Data-New_Section_22.tsv" id="1452.1.1" type="Gaze" />
+         <annotation filename="P12-Rec1-Guide-Cut.tsv" id="1452.1.2" type="GuideCut" />
+    </track>
+    <track filename="P12-Rec1-2009.08.26.11.32.39_BW2 _BW_Section_22.avi" id="1452.2" type="Video" color="0" view="0" camera="3">
+         <annotation filename="P12-Rec1-All-Data-New_Section_22.tsv" id="1452.2.1" type="Gaze" />
+         <annotation filename="P12-Rec1-Guide-Cut.tsv" id="1452.2.2" type="GuideCut" />
+    </track>
+    <track filename="P12-Rec1-2009.08.26.11.32.39_BW3 _BW_Section_22.avi" id="1452.3" type="Video" color="0" view="0" camera="4">
+         <annotation filename="P12-Rec1-All-Data-New_Section_22.tsv" id="1452.3.1" type="Gaze" />
+         <annotation filename="P12-Rec1-Guide-Cut.tsv" id="1452.3.2" type="GuideCut" />
+    </track>
+    <track filename="P12-Rec1-2009.08.26.11.32.39_BW4 _BW_Section_22.avi" id="1452.4" type="Video" color="0" view="0" camera="5">
+         <annotation filename="P12-Rec1-All-Data-New_Section_22.tsv" id="1452.4.1" type="Gaze" />
+         <annotation filename="P12-Rec1-Guide-Cut.tsv" id="1452.4.2" type="GuideCut" />
+    </track>
+    <track filename="P12-Rec1-2009.08.26.11.32.39_BW5 _BW_Section_22.avi" id="1452.5" type="Video" color="0" view="1" camera="6">
+         <annotation filename="P12-Rec1-All-Data-New_Section_22.tsv" id="1452.5.1" type="Gaze" />
+         <annotation filename="P12-Rec1-Guide-Cut.tsv" id="1452.5.2" type="GuideCut" />
+    </track>
+    <track filename="P12-Rec1-2009.08.26.11.32.39_C1 trigger _C_Section_22.avi" id="1452.6" type="Video" color="1" view="0" camera="1">
+         <annotation filename="P12-Rec1-All-Data-New_Section_22.tsv" id="1452.6.1" type="Gaze" />
+         <annotation filename="P12-Rec1-Guide-Cut.tsv" id="1452.6.2" type="GuideCut" />
+    </track>
+    <track filename="P12-Rec1-Audio_Section_22.wav" id="1452.7" type="Audio" channel="2">
+         <annotation filename="P12-Rec1-Guide-Cut.tsv" id="1452.7.1" type="GuideCut" />
+    </track>
+</session>

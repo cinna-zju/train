@@ -1,0 +1,35 @@
+<?xml version="1.0" ?>
+<session sessionId="2118" date="2009-08-28" time="09:37:20" experimentType="emotion elicitation" isStim="1" feltEmo="3" feltArsl="4" feltVlnc="2" feltCtrl="3" feltPred="4" cutNr="38" cutLenSec="98.9818" vidRate="60.9708" audRate="48000" audBeginSmp="123696290.5" audEndSmp="128447418.5" vidBeginSmp="157083.5" vidEndSmp="163118.5" mediaFile="30.avi">
+    <subject id="17" hasBeard="True" hasMoustache="True" hasGlasses="False"/>
+    <track filename="P17-Rec1-2009.08.28.09.35.38_BW1 _BW_Section_38.avi" id="2118.1" type="Video" color="0" view="0" camera="2">
+         <annotation filename="P17-Rec1-All-Data-New_Section_38.tsv" id="2118.1.1" type="Gaze" />
+         <annotation filename="P17-Rec1-Guide-Cut.tsv" id="2118.1.2" type="GuideCut" />
+    </track>
+    <track filename="P17-Rec1-2009.08.28.09.35.38_BW2 _BW_Section_38.avi" id="2118.2" type="Video" color="0" view="0" camera="3">
+         <annotation filename="P17-Rec1-All-Data-New_Section_38.tsv" id="2118.2.1" type="Gaze" />
+         <annotation filename="P17-Rec1-Guide-Cut.tsv" id="2118.2.2" type="GuideCut" />
+    </track>
+    <track filename="P17-Rec1-2009.08.28.09.35.38_BW3 _BW_Section_38.avi" id="2118.3" type="Video" color="0" view="0" camera="4">
+         <annotation filename="P17-Rec1-All-Data-New_Section_38.tsv" id="2118.3.1" type="Gaze" />
+         <annotation filename="P17-Rec1-Guide-Cut.tsv" id="2118.3.2" type="GuideCut" />
+    </track>
+    <track filename="P17-Rec1-2009.08.28.09.35.38_BW4 _BW_Section_38.avi" id="2118.4" type="Video" color="0" view="0" camera="5">
+         <annotation filename="P17-Rec1-All-Data-New_Section_38.tsv" id="2118.4.1" type="Gaze" />
+         <annotation filename="P17-Rec1-Guide-Cut.tsv" id="2118.4.2" type="GuideCut" />
+    </track>
+    <track filename="P17-Rec1-2009.08.28.09.35.38_BW5 _BW_Section_38.avi" id="2118.5" type="Video" color="0" view="1" camera="6">
+         <annotation filename="P17-Rec1-All-Data-New_Section_38.tsv" id="2118.5.1" type="Gaze" />
+         <annotation filename="P17-Rec1-Guide-Cut.tsv" id="2118.5.2" type="GuideCut" />
+    </track>
+    <track filename="P17-Rec1-2009.08.28.09.35.38_C1 trigger _C_Section_38.avi" id="2118.6" type="Video" color="1" view="0" camera="1">
+         <annotation filename="P17-Rec1-All-Data-New_Section_38.tsv" id="2118.6.1" type="Gaze" />
+         <annotation filename="P17-Rec1-Guide-Cut.tsv" id="2118.6.2" type="GuideCut" />
+    </track>
+    <track filename="P17-Rec1-Audio_Section_38.wav" id="2118.7" type="Audio" channel="2">
+         <annotation filename="P17-Rec1-Guide-Cut.tsv" id="2118.7.1" type="GuideCut" />
+    </track>
+    <track filename="Part_17_S_Trial19_emotion.bdf" id="2118.8" type="Physiological">
+         <annotation filename="P17-Rec1-All-Data-New_Section_38.tsv" id="2118.8.1" type="Gaze" />
+         <annotation filename="P17-Rec1-Guide-Cut.tsv" id="2118.8.2" type="GuideCut" />
+    </track>
+</session>

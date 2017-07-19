@@ -1,0 +1,35 @@
+<?xml version="1.0" ?>
+<session sessionId="552" date="2009-07-22" time="12:05:59" experimentType="emotion elicitation" isStim="1" feltEmo="4" feltArsl="4" feltVlnc="8" feltCtrl="9" feltPred="4" cutNr="32" cutLenSec="116.236" vidRate="60.9708" audRate="48000" audBeginSmp="118908440.5" audEndSmp="124487767.5" vidBeginSmp="150548.5" vidEndSmp="157635.5" mediaFile="funny_f.avi">
+    <subject id="5" hasBeard="False" hasMoustache="False" hasGlasses="True"/>
+    <track filename="P5-Rec1-2009.07.22.12.05.44_BW1 _BW_Section_32.avi" id="552.1" type="Video" color="0" view="0" camera="2">
+         <annotation filename="P5-Rec1-All-Data-New_Section_32.tsv" id="552.1.1" type="Gaze" />
+         <annotation filename="P5-Rec1-Guide-Cut.tsv" id="552.1.2" type="GuideCut" />
+    </track>
+    <track filename="P5-Rec1-2009.07.22.12.05.44_BW2 _BW_Section_32.avi" id="552.2" type="Video" color="0" view="0" camera="3">
+         <annotation filename="P5-Rec1-All-Data-New_Section_32.tsv" id="552.2.1" type="Gaze" />
+         <annotation filename="P5-Rec1-Guide-Cut.tsv" id="552.2.2" type="GuideCut" />
+    </track>
+    <track filename="P5-Rec1-2009.07.22.12.05.44_BW3 _BW_Section_32.avi" id="552.3" type="Video" color="0" view="0" camera="4">
+         <annotation filename="P5-Rec1-All-Data-New_Section_32.tsv" id="552.3.1" type="Gaze" />
+         <annotation filename="P5-Rec1-Guide-Cut.tsv" id="552.3.2" type="GuideCut" />
+    </track>
+    <track filename="P5-Rec1-2009.07.22.12.05.44_BW4 _BW_Section_32.avi" id="552.4" type="Video" color="0" view="0" camera="5">
+         <annotation filename="P5-Rec1-All-Data-New_Section_32.tsv" id="552.4.1" type="Gaze" />
+         <annotation filename="P5-Rec1-Guide-Cut.tsv" id="552.4.2" type="GuideCut" />
+    </track>
+    <track filename="P5-Rec1-2009.07.22.12.05.44_BW5 _BW_Section_32.avi" id="552.5" type="Video" color="0" view="1" camera="6">
+         <annotation filename="P5-Rec1-All-Data-New_Section_32.tsv" id="552.5.1" type="Gaze" />
+         <annotation filename="P5-Rec1-Guide-Cut.tsv" id="552.5.2" type="GuideCut" />
+    </track>
+    <track filename="P5-Rec1-2009.07.22.12.05.44_C1 trigger _C_Section_32.avi" id="552.6" type="Video" color="1" view="0" camera="1">
+         <annotation filename="P5-Rec1-All-Data-New_Section_32.tsv" id="552.6.1" type="Gaze" />
+         <annotation filename="P5-Rec1-Guide-Cut.tsv" id="552.6.2" type="GuideCut" />
+    </track>
+    <track filename="P5-Rec1-Audio_Section_32.wav" id="552.7" type="Audio" channel="2">
+         <annotation filename="P5-Rec1-Guide-Cut.tsv" id="552.7.1" type="GuideCut" />
+    </track>
+    <track filename="Part_5_S_Trial16_emotion.bdf" id="552.8" type="Physiological">
+         <annotation filename="P5-Rec1-All-Data-New_Section_32.tsv" id="552.8.1" type="Gaze" />
+         <annotation filename="P5-Rec1-Guide-Cut.tsv" id="552.8.2" type="GuideCut" />
+    </track>
+</session>

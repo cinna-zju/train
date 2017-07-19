@@ -1,0 +1,35 @@
+<?xml version="1.0" ?>
+<session sessionId="2898" date="2009-09-01" time="10:04:19" experimentType="emotion elicitation" isStim="1" feltEmo="0" feltArsl="1" feltVlnc="5" feltCtrl="5" feltPred="4" cutNr="38" cutLenSec="108.1502" vidRate="60.9708" audRate="48000" audBeginSmp="122134523.5" audEndSmp="127325731.5" vidBeginSmp="155111.5" vidEndSmp="161705.5" mediaFile="newyork_f.avi">
+    <subject id="23" hasBeard="False" hasMoustache="False" hasGlasses="False"/>
+    <track filename="P23-Rec1-2009.09.01.10.02.05_BW1 _BW_Section_38.avi" id="2898.1" type="Video" color="0" view="0" camera="2">
+         <annotation filename="P23-Rec1-All-Data-New_Section_38.tsv" id="2898.1.1" type="Gaze" />
+         <annotation filename="P23-Rec1-Guide-Cut.tsv" id="2898.1.2" type="GuideCut" />
+    </track>
+    <track filename="P23-Rec1-2009.09.01.10.02.05_BW2 _BW_Section_38.avi" id="2898.2" type="Video" color="0" view="0" camera="3">
+         <annotation filename="P23-Rec1-All-Data-New_Section_38.tsv" id="2898.2.1" type="Gaze" />
+         <annotation filename="P23-Rec1-Guide-Cut.tsv" id="2898.2.2" type="GuideCut" />
+    </track>
+    <track filename="P23-Rec1-2009.09.01.10.02.05_BW3 _BW_Section_38.avi" id="2898.3" type="Video" color="0" view="0" camera="4">
+         <annotation filename="P23-Rec1-All-Data-New_Section_38.tsv" id="2898.3.1" type="Gaze" />
+         <annotation filename="P23-Rec1-Guide-Cut.tsv" id="2898.3.2" type="GuideCut" />
+    </track>
+    <track filename="P23-Rec1-2009.09.01.10.02.05_BW4 _BW_Section_38.avi" id="2898.4" type="Video" color="0" view="0" camera="5">
+         <annotation filename="P23-Rec1-All-Data-New_Section_38.tsv" id="2898.4.1" type="Gaze" />
+         <annotation filename="P23-Rec1-Guide-Cut.tsv" id="2898.4.2" type="GuideCut" />
+    </track>
+    <track filename="P23-Rec1-2009.09.01.10.02.05_BW5 _BW_Section_38.avi" id="2898.5" type="Video" color="0" view="1" camera="6">
+         <annotation filename="P23-Rec1-All-Data-New_Section_38.tsv" id="2898.5.1" type="Gaze" />
+         <annotation filename="P23-Rec1-Guide-Cut.tsv" id="2898.5.2" type="GuideCut" />
+    </track>
+    <track filename="P23-Rec1-2009.09.01.10.02.05_C1 trigger _C_Section_38.avi" id="2898.6" type="Video" color="1" view="0" camera="1">
+         <annotation filename="P23-Rec1-All-Data-New_Section_38.tsv" id="2898.6.1" type="Gaze" />
+         <annotation filename="P23-Rec1-Guide-Cut.tsv" id="2898.6.2" type="GuideCut" />
+    </track>
+    <track filename="P23-Rec1-Audio_Section_38.wav" id="2898.7" type="Audio" channel="2">
+         <annotation filename="P23-Rec1-Guide-Cut.tsv" id="2898.7.1" type="GuideCut" />
+    </track>
+    <track filename="Part_23_S_Trial19_emotion.bdf" id="2898.8" type="Physiological">
+         <annotation filename="P23-Rec1-All-Data-New_Section_38.tsv" id="2898.8.1" type="Gaze" />
+         <annotation filename="P23-Rec1-Guide-Cut.tsv" id="2898.8.2" type="GuideCut" />
+    </track>
+</session>

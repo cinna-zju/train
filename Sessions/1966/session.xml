@@ -1,0 +1,35 @@
+<?xml version="1.0" ?>
+<session sessionId="1966" date="2009-08-27" time="12:04:50" experimentType="emotion elicitation" isStim="1" feltEmo="0" feltArsl="3" feltVlnc="5" feltCtrl="5" feltPred="7" cutNr="16" cutLenSec="117.9581" vidRate="60.9708" audRate="48000" audBeginSmp="49528952.5" audEndSmp="55190943.5" vidBeginSmp="62886.5" vidEndSmp="70078.5" mediaFile="52.avi">
+    <subject id="16" hasBeard="True" hasMoustache="True" hasGlasses="False"/>
+    <track filename="P16-Rec1-2009.08.27.12.02.50_BW1 _BW_Section_16.avi" id="1966.1" type="Video" color="0" view="0" camera="2">
+         <annotation filename="P16-Rec1-All-Data-New_Section_16.tsv" id="1966.1.1" type="Gaze" />
+         <annotation filename="P16-Rec1-Guide-Cut.tsv" id="1966.1.2" type="GuideCut" />
+    </track>
+    <track filename="P16-Rec1-2009.08.27.12.02.50_BW2 _BW_Section_16.avi" id="1966.2" type="Video" color="0" view="0" camera="3">
+         <annotation filename="P16-Rec1-All-Data-New_Section_16.tsv" id="1966.2.1" type="Gaze" />
+         <annotation filename="P16-Rec1-Guide-Cut.tsv" id="1966.2.2" type="GuideCut" />
+    </track>
+    <track filename="P16-Rec1-2009.08.27.12.02.50_BW3 _BW_Section_16.avi" id="1966.3" type="Video" color="0" view="0" camera="4">
+         <annotation filename="P16-Rec1-All-Data-New_Section_16.tsv" id="1966.3.1" type="Gaze" />
+         <annotation filename="P16-Rec1-Guide-Cut.tsv" id="1966.3.2" type="GuideCut" />
+    </track>
+    <track filename="P16-Rec1-2009.08.27.12.02.50_BW4 _BW_Section_16.avi" id="1966.4" type="Video" color="0" view="0" camera="5">
+         <annotation filename="P16-Rec1-All-Data-New_Section_16.tsv" id="1966.4.1" type="Gaze" />
+         <annotation filename="P16-Rec1-Guide-Cut.tsv" id="1966.4.2" type="GuideCut" />
+    </track>
+    <track filename="P16-Rec1-2009.08.27.12.02.50_BW5 _BW_Section_16.avi" id="1966.5" type="Video" color="0" view="1" camera="6">
+         <annotation filename="P16-Rec1-All-Data-New_Section_16.tsv" id="1966.5.1" type="Gaze" />
+         <annotation filename="P16-Rec1-Guide-Cut.tsv" id="1966.5.2" type="GuideCut" />
+    </track>
+    <track filename="P16-Rec1-2009.08.27.12.02.50_C1 trigger _C_Section_16.avi" id="1966.6" type="Video" color="1" view="0" camera="1">
+         <annotation filename="P16-Rec1-All-Data-New_Section_16.tsv" id="1966.6.1" type="Gaze" />
+         <annotation filename="P16-Rec1-Guide-Cut.tsv" id="1966.6.2" type="GuideCut" />
+    </track>
+    <track filename="P16-Rec1-Audio_Section_16.wav" id="1966.7" type="Audio" channel="2">
+         <annotation filename="P16-Rec1-Guide-Cut.tsv" id="1966.7.1" type="GuideCut" />
+    </track>
+    <track filename="Part_16_S_Trial8_emotion.bdf" id="1966.8" type="Physiological">
+         <annotation filename="P16-Rec1-All-Data-New_Section_16.tsv" id="1966.8.1" type="Gaze" />
+         <annotation filename="P16-Rec1-Guide-Cut.tsv" id="1966.8.2" type="GuideCut" />
+    </track>
+</session>
