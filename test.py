@@ -1,31 +1,36 @@
-import os
-os.environ['TF_CPP_MIN_LOG_LEVEL']='2'
-import tensorflow as tf
+# import os
+# os.environ['TF_CPP_MIN_LOG_LEVEL']='2'
+# import tensorflow as tf
 import numpy as np
+import load_data as ld
+from sklearn import svm
+import random
 
-W = tf.Variable([.3], dtype=tf.float32)
-b = tf.Variable([-.3], dtype=tf.float32)
-x = tf.placeholder(tf.float32)
+label, alldata = ld.get_data(6)
+# emo_tag = allo_label(emo)
 
-linear_model = W*x+b
+print(alldata.shape)
 
-y = tf.placeholder(tf.float32)
-squared_deltas = tf.square(linear_model - y)
-loss = tf.reduce_sum(squared_deltas)
+# data, mat(:,36) 4 channel * 9 emotion
+data = alldata[:, 2:11]
+data = np.column_stack((data, alldata[:, 13:22]))
+data = np.column_stack((data, alldata[:, 24:33]))
+data = np.column_stack((data, alldata[:, 35:44]))
 
-optimizer = tf.train.GradientDescentOptimizer(0.01)
-train = optimizer.minimize(loss)
+print(data.shape)
+print(label.shape)
 
-init = tf.global_variables_initializer()
-sess = tf.Session()
-sess.run(init)
+clf = svm.SVC(decision_function_shape='ovo')
+clf.fit(data[0:1500,:], label[0:1500])
 
-for i in range(1000):
-    sess.run(train, {x:[1,2,3,4], y:[0,-1,-2,-3]})
-    if i % 50 == 0:
-        print(sess.run(loss, {x:[1,2,3,4], y:[0,-1,-2,-3]}))
+cnt = 0
+for k in range(500):
+    i = random.randint(1500, 2700)
+    result = (clf.predict(data[i,:].reshape(1,-1)))
+    if result == label[i]:
+        cnt += 1
 
+print(cnt/500)
 
-curr_w, curr_b, curr_loss = sess.run([W, b, loss],{x:[1,2,3,4], y:[0,-1,-2,-3]})
-print("w:%s b:%s loss:%s" % (curr_w, curr_b, curr_loss))
+#print(clf.support_vectors_)
 
