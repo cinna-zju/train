@@ -76,11 +76,11 @@ clf = tr.train(label, data)
 # plt.plot(alldata[0:17, 0], res[:17])
 # plt.show()
 
-conn = sqlite3.connect('./data/2')
+conn = sqlite3.connect('./data/1952')
 c = conn.cursor()
 subdata = []
 for no in range(1,5):
-    sql = 'select * from emotions4_'+str(no)
+    sql = 'select * from emotions1954_'+str(no)
     c.execute(sql)
     subdata.append(c.fetchall())
     subdata[no-1] = np.array(subdata[no-1], dtype=np.float32)
