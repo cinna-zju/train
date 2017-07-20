@@ -7,11 +7,11 @@ from xml.dom import minidom
 #     2212, 2342, 2472, 2602, 2862,
 #     2992, 3382, 3512, 3642, 3772]
 
-folder = [2, 132, 1692, 1952, 2082, 2212, 
+folder = [132, 1692, 1952, 2082, 2212, 
     2342, 2472, 2602, 2862, 2992, 
     3382, 3512, 3642, 3772]
 
-threshold = 30
+threshold = 1
 
 def get_data(num):
     
@@ -68,7 +68,8 @@ def get_data(num):
             for j in range(1, 4):
                 temp = np.column_stack((temp, subdata[j][0:size, :]))
 
-            if emo != 0:
+            if emo != 0 and emo!= 6:
+                # classify with emotion
                 # EMOMASK = [0,0,1,1,1,1,1,1,1,0,0,
                 #     0,0,1,1,1,1,1,1,1,0,0,
                 #     0,0,1,1,1,1,1,1,1,0,0,
@@ -82,35 +83,45 @@ def get_data(num):
                 
                 # # print('before', before.shape)
                 # for j in range(0, before.shape[0]):
-                #     col = before[j,[]]
+                #     col = before[j,:]
                 #     # print(col)
                 #     for p in col.flat:
                 #         if p >= threshold:
                 #             break
                 #         mask[j] = False
 
+                #classify with valence
                 before = temp[:,[9, 20, 31, 42]]
-                mask = np.ones(temp.shape[0], dtype = np.bool)                      
+                # mask = np.ones(temp.shape[0], dtype = np.bool)                      
                 # print('before', before.shape)
-                for j in range(0, before.shape[0]):
-                    col = before[j,:]
-                    # print(col)
-                    for p in col.flat:
-                        if p >= threshold or p < 0:
-                            break
-                        mask[j] = False
-                    
-                after = temp[mask,:]
-                print(folder[i]+k, 'after: ', after.shape)
-                sublabel = np.ones((after.shape[0],1)) * new_label(int(emo))
-                # print(new_label(int(emo)))
+                sublabel = np.ones((before.shape[0],1)) * new_label(int(emo))
+#                 print(sublabel)
                 label = np.row_stack((label, sublabel))
+
+
+
+
+                #after = temp[mask,:]
+                after = temp
+
+                # print(folder[i]+k, 'before:', before.shape, 'after: ', after.shape)
+                # sublabel = np.ones((after.shape[0],1)) * new_label(int(emo))
+                # # print(new_label(int(emo)))
+                # label = np.row_stack((label, sublabel))
                 data = np.row_stack((data, after))
 
             k += 2
         conn.close()       
         loss = 1 - num_detec/frame
-    
+        #print(label.T)
+        for j in range(0, data.shape[0]):
+            col = data[j,[9,20,31,42]]
+            # print(col)
+            valsum = np.sum(np.abs(col))
+            if valsum < threshold:
+                #print(valsum, label[j])
+                label[j] = 0
+
     return np.ravel(label[1:]), data[1:,:], loss 
     # delete first row
     # data, mat[n,44]
@@ -144,7 +155,7 @@ def new_label(emo):
     if emo == 4 or emo == 11:
         return 1 #pleasant
     else:
-        if emo == 0:
+        if emo == 0 or emo == 6:
             return 0 # neutral
         else:
             return -1 # unpleasant

@@ -6,8 +6,9 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import StratifiedKFold
 from matplotlib import pyplot as plt
 import sqlite3
+from sklearn.externals import joblib
 
-label, alldata, loss = ld.get_data(15)
+label, alldata, loss = ld.get_data(7)
 
 print(alldata.shape)
 print(label.shape)
@@ -18,10 +19,14 @@ data = np.column_stack((data, alldata[:, 13:22]))
 data = np.column_stack((data, alldata[:, 24:33]))
 data = np.column_stack((data, alldata[:, 35:44]))
 
+data = data[:,[7,16,25,34]]
+
 print(data.shape)
+
 
 clf = tr.train(label, data)
 
+# clf = joblib.load('dump.pkl')
 # time = range(0,label.shape[0])
 
 # # error
@@ -72,10 +77,10 @@ clf = tr.train(label, data)
 # plt.show()
 
 conn = sqlite3.connect('./data/2')
-c = conn.cursor
+c = conn.cursor()
 subdata = []
 for no in range(1,5):
-    sql = 'select * from emotions2_'+str(no)
+    sql = 'select * from emotions4_'+str(no)
     c.execute(sql)
     subdata.append(c.fetchall())
     subdata[no-1] = np.array(subdata[no-1], dtype=np.float32)
@@ -90,25 +95,27 @@ for j in range(1, 4):
     temp = np.column_stack((temp, subdata[j][0:size, :]))
 
 for j in range(0,4):
-    plt.subplot(5,1,i+1)
-    plt.plot(temp[:,0], temp[:, 2+11*j],
-        temp[:,0], temp[:, 3+11*j],
-        temp[:,0], temp[:, 4+11*j],
-        temp[:,0], temp[:, 5+11*j],
-        temp[:,0], temp[:, 6+11*j],
-        temp[:,0], temp[:, 7+11*j],
-        temp[:,0], temp[:, 8+11*j]
-    )
+    plt.subplot(5,1,j+1)
+    # print(temp[:, 9+11*j])
+    plt.plot(temp[:,0], temp[:, 9+11*j])
 
-EMOMASK = [0,0,1,1,1,1,1,1,1,0,0,
-    0,0,1,1,1,1,1,1,1,0,0,
-    0,0,1,1,1,1,1,1,1,0,0,
-    0,0,1,1,1,1,1,1,1,0,0
+EMOMASK = [0,0,1,1,1,1,1,1,1,1,1,
+    0,0,1,1,1,1,1,1,1,1,1,
+    0,0,1,1,1,1,1,1,1,1,1,
+    0,0,1,1,1,1,1,1,1,1,1
 ]
+
+EMOMASK = [0,0,0,0,0,0,0,0,0,1,0,
+    0,0,0,0,0,0,0,0,0,1,0,
+    0,0,0,0,0,0,0,0,0,1,0,
+    0,0,0,0,0,0,0,0,0,1,0,
+]
+EMOMASK = np.array(EMOMASK, dtype=np.bool)
 test = temp[:, EMOMASK]
 res = []
 for j in range(0, test.shape[0]):
-    res.append(clf.predict(test[i,:].reshape(1, -1)))
+    res.append(clf.predict(test[j,:].reshape(1, -1)))
 
 plt.subplot(5,1,5)
 plt.plot(temp[:,0], res)
+plt.show()
