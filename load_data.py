@@ -7,7 +7,7 @@ from xml.dom import minidom
 #     2212, 2342, 2472, 2602, 2862,
 #     2992, 3382, 3512, 3642, 3772]
 
-folder = [2342, 2472, 2602]
+folder = [912, 1692, 1952, 2082, 2342, 2472, 2602, 2862]
 
 def get_data(num):
     
@@ -15,14 +15,12 @@ def get_data(num):
     label = np.zeros((1,1))
     
     for i in range(0, num):
-
         conn = sqlite3.connect('./data/'+str(folder[i]))
-
         # print('./data/'+str(folder[i]))
-        
         c = conn.cursor()
         k = 0
         limit = 40
+
         if(folder[i] == 1952):
             limit = 32
         
@@ -30,39 +28,21 @@ def get_data(num):
             subdata = []
             emo, beg, end = get_label(folder[i]+k)
             for no in range(1,5):
-                # sql = 'select * from emotions'+str(folder[i]+k)+'_'+str(no)+' where time<"'+str(15+float(end)-float(beg))+'" and time>15' 
                 sql = 'select * from emotions'+str(folder[i]+k)+'_'+str(no) 
-                
                 c.execute(sql)
-                # print(sql)
+
                 subdata.append(c.fetchall())
+                subdata[no-1] = np.array(subdata[no-1], dtype=np.float32)
 
-                subdata[no-1] = np.array(subdata[no-1])
                 # print("subdata:", subdata[no-1].shape)
-                if no == 1:
-                    per = subdata[no-1][:,1]
-                    pershape = per.shape[0]
-                    percen = per[per>'0'].shape[0] / pershape
-                    print(folder[i]+k, percen)
+                
+                # corp video
 
-
-
-                # time = []
-                # for t in subdata[no-1][:,0]:
-                #     time.append( float(t) )
-                # time = np.array(time)
-                # mask = time>15 
-                # # print(mask)
-                # subdata[no-1] = subdata[no-1][mask, :]
-
-                # time = []
-                # for t in subdata[no-1][:,0]:
-                #     time.append( float(t) )
-                # time = np.array(time)
-                # mask = time<float(15+end-beg) 
-                # subdata[no-1] = subdata[no-1][mask, :]
-
-
+                mask = subdata[no-1][:,0] > 15 
+                subdata[no-1] = subdata[no-1][mask, :]
+                                
+                mask = subdata[no-1][:,0] < 15+end-beg 
+                subdata[no-1] = subdata[no-1][mask, :]
 
             size = min(subdata[0].shape[0],
                 subdata[1].shape[0],
@@ -71,30 +51,41 @@ def get_data(num):
             )
 
 
-
-            # print(folder[i]+k,subdata[0].shape[0],
-            #     subdata[1].shape[0],
-            #     subdata[2].shape[0],
-            #     subdata[3].shape[0]
-            # )
-            # print("size", size)
-            sublabel = np.ones((size,1)) * new_label(float(emo))
-            # print(sublabel.shape)
-            # print(label.shape)
-            label = np.row_stack((label, sublabel))
-            print(folder[i]+k, 'size: ',size)
+            # print(folder[i]+k, 'size: ',size)
             temp = subdata[0][0:size, :]
-
-
-            # print(subdata[0].shape)
-            # time, num, +9
-
 
             for j in range(1, 4):
                 temp = np.column_stack((temp, subdata[j][0:size, :]))
-                # time, +9
-        
-            data = np.row_stack((data, temp))
+
+            if emo != 0:
+                EMOMASK = [0,0,1,1,1,1,1,1,1,0,0,
+                    0,0,1,1,1,1,1,1,1,0,0,
+                    0,0,1,1,1,1,1,1,1,0,0,
+                    0,0,1,1,1,1,1,1,1,0,0
+                ]
+                EMOMASK = np.array(EMOMASK, dtype = np.bool)
+
+                before = temp[:,EMOMASK]
+                
+                
+                mask = np.ones(temp.shape[0], dtype = np.bool)
+                
+                # print('before', before.shape)
+
+                for j in range(0, before.shape[0]):
+                    col = before[j,:]
+                    # print(col)
+                    for p in range(0, col.shape[0]):
+                        if col[p] >= 5:
+                            break
+                        mask[j] = False
+                    
+                after = temp[mask,:]
+                print('after: ', after.shape)
+                sublabel = np.ones((after.shape[0],1)) * new_label(float(emo))
+                label = np.row_stack((label, sublabel))
+                data = np.row_stack((data, after))
+
             k += 2
 
         conn.close()
@@ -139,3 +130,4 @@ def new_label(emo):
             return 0 # neutral
         else:
             return -1 # unpleasant
+
