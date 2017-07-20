@@ -7,7 +7,7 @@ from xml.dom import minidom
 #     2212, 2342, 2472, 2602, 2862,
 #     2992, 3382, 3512, 3642, 3772]
 
-folder = [912, 1692, 1952, 2082, 2342, 2472, 2602, 2862]
+folder = [912, 1692, 1952, 2082, 2342, 2472, 2602, 2862, 2992, 3382, 3512]
 
 def get_data(num):
     
@@ -131,3 +131,18 @@ def new_label(emo):
         else:
             return -1 # unpleasant
 
+
+# def to3label(data):
+#     data_3label = np.zeros([data.shape[0],4])
+#     EMOMASK = [1,1,1,1,1,1,1,0,0]
+#     EMOMASK = np.array(EMOMASK, dtype = np.bool)
+
+#     for i in range(0, 4):
+#         emodata = data[:, 9*i:9*i+7]
+
+    
+#     emodata = data[:,EMOMASK]
+
+#     x = np.argmax(emodata, axis=1)
+#     # print(x.shape)
+#     for 
