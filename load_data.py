@@ -40,6 +40,7 @@ def get_data(num):
                 subdata[no-1] = np.array(subdata[no-1], dtype=np.float32)
                 # print(sql, subdata[no-1].shape)
                 
+
                 if subdata[no-1].shape[0] > 0:
                     # corp video
                     mask = subdata[no-1][:,0] > 15 
@@ -100,7 +101,7 @@ def get_data(num):
                         mask[j] = False
                     
                 after = temp[mask,:]
-                # print('after: ', after.shape)
+                print(folder[i]+k, 'after: ', after.shape)
                 sublabel = np.ones((after.shape[0],1)) * new_label(int(emo))
                 # print(new_label(int(emo)))
                 label = np.row_stack((label, sublabel))
