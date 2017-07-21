@@ -19,15 +19,9 @@ data = np.column_stack((data, alldata[:, 13:22]))
 data = np.column_stack((data, alldata[:, 24:33]))
 data = np.column_stack((data, alldata[:, 35:44]))
 
-#data = data[:,[7,16,25,34]]
-
 print(data.shape)
-
-
+#print(label[0:200])
 clf = tr.train(label, data)
-
-# clf = joblib.load('dump.pkl')
-# time = range(0,label.shape[0])
 
 # # error
 # for i in range(0, 4):
@@ -80,7 +74,7 @@ conn = sqlite3.connect('./data/2')
 c = conn.cursor()
 subdata = []
 for no in range(1,5):
-    sql = 'select * from emotions26_'+str(no)
+    sql = 'select * from emotions6_'+str(no)
     c.execute(sql)
     subdata.append(c.fetchall())
     subdata[no-1] = np.array(subdata[no-1], dtype=np.float32)
@@ -106,11 +100,6 @@ EMOMASK = [0,0,1,1,1,1,1,1,1,1,1,
     0,0,1,1,1,1,1,1,1,1,1
 ]
 
-#EMOMASK = [0,0,0,0,0,0,0,0,0,1,0,
-#    0,0,0,0,0,0,0,0,0,1,0,
-#    0,0,0,0,0,0,0,0,0,1,0,
-#    0,0,0,0,0,0,0,0,0,1,0,
-#]
 EMOMASK = np.array(EMOMASK, dtype=np.bool)
 test = temp[:, EMOMASK]
 res = []
