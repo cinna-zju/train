@@ -9,9 +9,9 @@ from xml.dom import minidom
 
 folder = [132, 1692, 1952, 2082, 2212, 
     2342, 2472, 2602, 2862, 2992, 
-    3382, 3512, 3642, 3772]
+    3382, 3512, 3642, 3772] #14
 
-threshold = 1
+threshold = 20
 
 def get_data(num):
     
@@ -43,10 +43,10 @@ def get_data(num):
 
                 if subdata[no-1].shape[0] > 0:
                     # corp video
-                    mask = subdata[no-1][:,0] > 15 
+                    mask = subdata[no-1][:,0] > 30
                     subdata[no-1] = subdata[no-1][mask, :]
                                     
-                    mask = subdata[no-1][:,0] < 15+end-beg 
+                    mask = subdata[no-1][:,0] <  60#15+end-beg 
                     subdata[no-1] = subdata[no-1][mask, :]
 
                     # drop frame when face is lost and calc the percentage

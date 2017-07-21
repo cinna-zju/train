@@ -19,7 +19,7 @@ data = np.column_stack((data, alldata[:, 13:22]))
 data = np.column_stack((data, alldata[:, 24:33]))
 data = np.column_stack((data, alldata[:, 35:44]))
 
-data = data[:,[7,16,25,34]]
+#data = data[:,[7,16,25,34]]
 
 print(data.shape)
 
@@ -57,8 +57,8 @@ clf = tr.train(label, data)
 
 # #plt.subplot(6,1,6)
 # #plt.plot(time, label)
-# print(np.mean(res == label))
-# print('not found:', loss)
+#print(np.mean(res == label))
+print('not found:', loss)
 # #plt.show()
 
 # for i in range(0, 4):
@@ -76,11 +76,11 @@ clf = tr.train(label, data)
 # plt.plot(alldata[0:17, 0], res[:17])
 # plt.show()
 
-conn = sqlite3.connect('./data/1952')
+conn = sqlite3.connect('./data/2')
 c = conn.cursor()
 subdata = []
 for no in range(1,5):
-    sql = 'select * from emotions1954_'+str(no)
+    sql = 'select * from emotions26_'+str(no)
     c.execute(sql)
     subdata.append(c.fetchall())
     subdata[no-1] = np.array(subdata[no-1], dtype=np.float32)
@@ -97,7 +97,8 @@ for j in range(1, 4):
 for j in range(0,4):
     plt.subplot(5,1,j+1)
     # print(temp[:, 9+11*j])
-    plt.plot(temp[:,0], temp[:, 9+11*j])
+    plt.plot(temp[:,0], temp[:, 9+11*j]/100)
+    plt.ylim([-1.5,1.5])
 
 EMOMASK = [0,0,1,1,1,1,1,1,1,1,1,
     0,0,1,1,1,1,1,1,1,1,1,
@@ -105,11 +106,11 @@ EMOMASK = [0,0,1,1,1,1,1,1,1,1,1,
     0,0,1,1,1,1,1,1,1,1,1
 ]
 
-EMOMASK = [0,0,0,0,0,0,0,0,0,1,0,
-    0,0,0,0,0,0,0,0,0,1,0,
-    0,0,0,0,0,0,0,0,0,1,0,
-    0,0,0,0,0,0,0,0,0,1,0,
-]
+#EMOMASK = [0,0,0,0,0,0,0,0,0,1,0,
+#    0,0,0,0,0,0,0,0,0,1,0,
+#    0,0,0,0,0,0,0,0,0,1,0,
+#    0,0,0,0,0,0,0,0,0,1,0,
+#]
 EMOMASK = np.array(EMOMASK, dtype=np.bool)
 test = temp[:, EMOMASK]
 res = []
@@ -118,4 +119,5 @@ for j in range(0, test.shape[0]):
 
 plt.subplot(5,1,5)
 plt.plot(temp[:,0], res)
+plt.ylim([-1.5,1.5])
 plt.show()

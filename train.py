@@ -46,14 +46,9 @@ def train(label, data):
     # #             cnt += 1
     # #     print('svm_linear accuracy: ', cnt / len(test))
 
-    #     # rf = RandomForestClassifier(n_jobs = -1)
-    #     # rf.fit(data[train, :], label[train])
-    #     # cnt = 0
-    #     # for i in test:
-    #     #     if label[i] == rf.predict(data[i, :].reshape(1, -1)):
-    #     #         cnt += 1
-    #     # print('rf accuracy: ', cnt / len(test))
-
+    # rf = RandomForestClassifier()
+    # rf.fit(data, label)
+    # return rf
 
 
 
