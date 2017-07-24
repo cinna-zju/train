@@ -26,8 +26,8 @@ def get_data(num, folder):
             size = 1000
             for no in range(1,5):
                 try:
-                    sql = 'select * from emotions'+str(folder[i]+k)+'_'+str(no) 
-                    c.execute(sql)
+                sql = 'select * from emotions'+str(folder[i]+k)+'_'+str(no) 
+                c.execute(sql)
                 except sqlite3.OperationalError:
                     break
                 subdata.append(c.fetchall())
@@ -59,8 +59,8 @@ def get_data(num, folder):
             e = np.array([0, 0, 0, 0, 0, 0, 0], dtype=np.float64)
             if size > 0 and size != 1000:
             #     emo_7 = subdata[ii][:, 2:9]
-                #emo_7 = 0.4 * subdata[0][0:size,2:9] + 0.25 * subdata[1][0:size,2:9] + 0.25 * subdata[2][0:size,2:9] + 0.1 * subdata[3][0:size,2:9]
-                emo_7 = subdata[2][0:size, 2:9]
+                emo_7 = 0.4 * subdata[0][0:size,2:9] + 0.25 * subdata[1][0:size,2:9] + 0.25 * subdata[2][0:size,2:9] + 0.1 * subdata[3][0:size,2:9]
+                #emo_7 = subdata[2][0:size, 2:9]
                 for j in emo_7:
                     t = j[0:7]
                     emo_max = np.argmax(t)
