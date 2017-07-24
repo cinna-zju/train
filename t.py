@@ -1,10 +1,8 @@
 from sklearn import svm
 import numpy as np
-x = np.array([[0,0], [1,1], [1,0]])
+x = [4,3,2,1]
 
-for i in x:
-    print(i)
-    print(i.shape)
+print(x[2:3])
 
 
 
