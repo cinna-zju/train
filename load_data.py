@@ -3,13 +3,8 @@ import numpy as np
 from xml.dom import minidom
 import random
 import csv
-# 392, 522, 782, 912, 1172, 1562, 1952, 2732   
-# 8
-folder = [2, 132,  392, 522, 782, 1692, 2082,2212, 
-    2342, 2472, 2602, 2862, 2992, 
-    3382, 3512, 3642, 3772] #14*20-3 = 
 
-def get_data(num):
+def get_data(num, folder):
     
     data = np.zeros((1,7))
     label = []
@@ -30,8 +25,11 @@ def get_data(num):
             label.append(get_val(emo))
             size = 1000
             for no in range(1,5):
-                sql = 'select * from emotions'+str(folder[i]+k)+'_'+str(no) 
-                c.execute(sql)
+                try:
+                    sql = 'select * from emotions'+str(folder[i]+k)+'_'+str(no) 
+                    c.execute(sql)
+                except sqlite3.OperationalError:
+                    break
                 subdata.append(c.fetchall())
                 subdata[no-1] = np.array(subdata[no-1], dtype=np.float32)
 
@@ -61,8 +59,8 @@ def get_data(num):
             e = np.array([0, 0, 0, 0, 0, 0, 0], dtype=np.float64)
             if size > 0 and size != 1000:
             #     emo_7 = subdata[ii][:, 2:9]
-                emo_7 = 0.4 * subdata[0][0:size,2:9] + 0.25 * subdata[1][0:size,2:9] + 0.25 * subdata[2][0:size,2:9] + 0.1 * subdata[3][0:size,2:9]
-                
+                #emo_7 = 0.4 * subdata[0][0:size,2:9] + 0.25 * subdata[1][0:size,2:9] + 0.25 * subdata[2][0:size,2:9] + 0.1 * subdata[3][0:size,2:9]
+                emo_7 = subdata[2][0:size, 2:9]
                 for j in emo_7:
                     t = j[0:7]
                     emo_max = np.argmax(t)
@@ -78,7 +76,6 @@ def get_data(num):
             # val = subdata[0][:,[9, 20, 31, 42]]
             # sublabel = 0.4 * val[:,0] +0.25 * val[:,1] + 0.25 * val[:,2] + 0.1 * val[:,3]
             temp = np.hstack((temp, e))
-            
             temp = temp[1:]
             
             # l = 0

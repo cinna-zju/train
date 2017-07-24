@@ -7,28 +7,34 @@ from sklearn.model_selection import StratifiedKFold
 from matplotlib import pyplot as plt
 import sqlite3
 from sklearn.externals import joblib
+# 392, 522, 782, 912, 1172, 1562,  2732   
+# 8
+folder = [2, 132,  392, 522, 782, 
+    912, 1172, 1562, 1692, 1952, 
+    2082,2212, 2342, 2472, 2602, 
+    2862, 2992, 3382, 3512, 3642, 
+    3772] #14*20-3 = 
+for i in folder:
+    test_folder = []
+    print("test_folder: ", i)
+    test_folder.append(i)
+    train_folder = folder[:]
+    train_folder.remove(i)
+    label, data, loss = ld.get_data(20, train_folder)
+    label_test, data_test, loss_test = ld.get_data(1, test_folder)
 
-label, data, loss = ld.get_data(16)
-
-print(data.shape)
-print(label.shape)
-print('not found:', loss)
-
-skf = StratifiedKFold(n_splits=10)
-accu = []
-for train, test in skf.split(data, label):
-    clf = tr.train(label[train], data[train])
-    confusion = np.zeros([3,3])
+    accu = []
+    clf = tr.train(label, data)
+    # confusion = np.zeros([3,3])
     cnt = 0
-    for i in test:
-        result = clf.predict(data[i, :].reshape(1, -1))
-        if label[i] == result:
+    for j in range(0, data_test.shape[0]):
+        result = clf.predict(data_test[j,:].reshape(1, -1))
+        if label_test[j] == result:
             cnt += 1
-        confusion[int(label[i]+1), int(result+1)] += 1
+        #confusion[int(label[j]+1), int(result+1)] += 1
     #print(confusion/np.sum(confusion))    
-    accu.append(cnt/len(test))
-    
-print('svm accuracy: ', accu)
+    accu.append(cnt/data_test.shape[0])    
+    print('accuracy: ', accu, 'train sample: ', label.shape[0], 'test sample: ', label_test.shape[0])
 print('average: ', np.mean(accu))
 
 
