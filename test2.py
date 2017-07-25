@@ -22,7 +22,7 @@ for i in folder:
     test_folder.append(i)
     train_folder = folder[:]
     train_folder.remove(i)
-    label, data, loss = ld.get_data(21, train_folder)
+    label, data = ld.get_data_with_train(21, train_folder)
     
     label_test, data_test, loss_test = ld.get_data(1, test_folder)
 

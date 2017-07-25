@@ -3,8 +3,8 @@ import numpy as np
 from xml.dom import minidom
 import random
 import csv
-
-def get_data(num, folder):
+import pretrain as pt
+def get_data_7(num, folder):
     
     data = np.zeros((1,10))
     label = []
@@ -37,10 +37,8 @@ def get_data(num, folder):
                 if subdata[no-1].shape[0] == 0:
                     break
 
-                # # corp video
-                # mask = subdata[no-1][:,0] > 0
-                # subdata[no-1] = subdata[no-1][mask, :]                                
-                mask = subdata[no-1][:,0] < (float(end[str(folder[i]+k)]) - float(beg[str(folder[i]+k)]))/256 
+                # corp video                             
+                mask = subdata[no-1][:,0] > (float(end[str(folder[i]+k)]) - float(beg[str(folder[i]+k)]))/256 
                 subdata[no-1] = subdata[no-1][mask, :]
 
                 # drop frame when face is lost and calc the percentage
@@ -49,9 +47,10 @@ def get_data(num, folder):
                 mask = np.array(subdata[no-1][:,1], dtype=np.bool)
                 subdata[no-1] = subdata[no-1][mask]
 
+
+
                 if size > subdata[no-1].shape[0]:
                     size = subdata[no-1].shape[0]
-            # print(folder[i]+k, 'size: ',size)
             
             # joy, sad, disgust, neutral, anger, fear, surprise
             temp = np.zeros(1)
@@ -60,8 +59,9 @@ def get_data(num, folder):
             e = np.array([0, 0, 0, 0, 0, 0, 0], dtype=np.float64)
             if size > 0 and size != 1000:
                 # emo_7 = subdata[ii][:, 2:9]
-                emo_7 = 1.5 * subdata[0][0:size,2:9]  + 0.5 * subdata[1][0:size,2:9] + 0.5 * subdata[2][0:size,2:9] + 1 * subdata[3][0:size,2:9]
+                # emo_7 = 1.5 * subdata[0][0:size,2:9]  + 0.5 * subdata[1][0:size,2:9] + 0.5 * subdata[2][0:size,2:9] + 1 * subdata[3][0:size,2:9]
                 #emo_7 = subdata[0][0:size, 2:9]
+                
                 for j in emo_7:
                     t = j[0:7]
                     emo_max = np.argmax(t)
@@ -96,8 +96,6 @@ def get_data(num, folder):
 def get_time(no):
 
     feltEmo = []
-
-
     try:
         xmldoc = minidom.parse('./Sessions/'+str(no)+'/session.xml')
         # print('./Sessions/'+str(no)+'/session.xml')
@@ -125,7 +123,6 @@ def get_val(emo):
             return -1
 
 
-
 def get_t():
     begin = {}
     end = {}
@@ -136,4 +133,69 @@ def get_t():
             end[row[0]] = row[3]
     
     return begin, end
+
+
+
+def get_data_with_train(num, folder):
+    data = np.zeros((1,10))
+    label = []
+    num_detec = np.zeros(4)
+    frame = np.zeros(4)
+    for i in range(0, num):
+        conn = sqlite3.connect('./data/'+str(folder[i]))
+        c = conn.cursor()
+        k = 0
+        limit = 40
+
+        if(folder[i] == 1952):
+            limit = 32
         
+        while k < limit:
+            subdata = []
+            result1 = np.zeros(7)
+            emo = get_time(folder[i]+k)
+            beg, end = get_t()
+            label.append(get_val(emo))
+            size = 1000
+            for no in range(1,5):
+                try:
+                    sql = 'select * from emotions'+str(folder[i]+k)+'_'+str(no) 
+                    c.execute(sql)
+                except sqlite3.OperationalError:
+                    break
+                subdata.append(c.fetchall())
+                subdata[no-1] = np.array(subdata[no-1], dtype=np.float32)
+
+                if subdata[no-1].shape[0] == 0:
+                    break
+
+                # corp video                             
+                mask = subdata[no-1][:,0] > (float(end[str(folder[i]+k)]) - float(beg[str(folder[i]+k)]))/256 
+                subdata[no-1] = subdata[no-1][mask, :]
+
+                # drop frame when face is lost and calc the percentage
+                num_detec[no-1] += sum(subdata[no-1][:,1])
+                frame[no-1] += subdata[no-1].shape[0]
+                mask = np.array(subdata[no-1][:,1], dtype=np.bool)
+                subdata[no-1] = subdata[no-1][mask]
+
+
+
+                if size > subdata[no-1].shape[0]:
+                    size = subdata[no-1].shape[0]
+
+
+            if size > 0 and size!=1000:
+                temp = subdata[0][0:size, 2:9]
+                for j in range(1,4):
+                    temp = np.hstack((temp, subdata[j][0:size, 2:9]))
+
+            clf1 = pt.pretrain()
+            for j in temp:
+                result1 += clf1.predict(j)
+
+            result1 /= np.sum(result1)
+            data = np.vstack((data, result1))
+
+            k += 2
+    return np.array(label), data[1:, :]
