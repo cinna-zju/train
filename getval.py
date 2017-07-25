@@ -33,8 +33,9 @@ for i in folder:
         try:
             val = 0.4*subdata[0][0:size,9]+0.25*subdata[1][0:size,9]+0.25*subdata[2][0:size,9]+0.1*subdata[3][0:size,9]
             print(i+k, val.shape)
-            line = np.hstack((i+k, val))
-            print(line.shape)
+            meta = np.array([i+k, val.shape[0]])
+            line = np.hstack((meta, val))
+            # print(line.shape)
             writer.writerow(line)
 
         except IndexError:

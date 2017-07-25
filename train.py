@@ -10,9 +10,8 @@ from sklearn.neighbors import KNeighborsClassifier
 
 
 def train(label, data):
-    # clf = svm.SVC(kernel='sigmoid')
-    # clf.fit(data, label)
-    # return clf
+    clf = svm.SVC(kernel='linear')
+
 
     # rf = RandomForestClassifier()
     # rf.fit(data, label)
@@ -23,7 +22,8 @@ def train(label, data):
 
     #clf = AdaBoostClassifier().fit(data, label)  0.44
     
-    clf = KNeighborsClassifier().fit(data, label) 0.42
+    # clf = KNeighborsClassifier().fit(data, label) 0.42
+    clf.fit(data, label)
     return clf 
 
 

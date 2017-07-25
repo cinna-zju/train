@@ -41,6 +41,8 @@ print('average: ', np.mean(accu), 'std', np.std(accu))
 
 
 
+
+
 # data, mat(:,36) 4 channel * 9 emotion
 # data = alldata[:, 2:11]
 # data = np.column_stack((data, alldata[:, 13:22]))
