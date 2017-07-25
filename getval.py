@@ -29,7 +29,7 @@ for i in folder:
             if size > subdata[no-1].shape[0]:
                 size = subdata[no-1].shape[0]
             
-        k+=2
+        
         try:
             val = 0.4*subdata[0][0:size,9]+0.25*subdata[1][0:size,9]+0.25*subdata[2][0:size,9]+0.1*subdata[3][0:size,9]
             print(i+k, val.shape)
@@ -40,3 +40,5 @@ for i in folder:
 
         except IndexError:
             print('error', i, k)
+
+        k+=2

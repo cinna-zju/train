@@ -6,7 +6,7 @@ import csv
 
 def get_data(num, folder):
     
-    data = np.zeros((1,7))
+    data = np.zeros((1,10))
     label = []
     num_detec = np.zeros(4)
     frame = np.zeros(4)
@@ -60,20 +60,28 @@ def get_data(num, folder):
             e = np.array([0, 0, 0, 0, 0, 0, 0], dtype=np.float64)
             if size > 0 and size != 1000:
                 # emo_7 = subdata[ii][:, 2:9]
-                emo_7 = 0.4 * subdata[0][0:size,2:9] + 0.25 * subdata[1][0:size,2:9] + 0.25 * subdata[2][0:size,2:9] + 0.1 * subdata[3][0:size,2:9]
-                # emo_7 = subdata[0][0:size, 2:9]
+                emo_7 = 1.5 * subdata[0][0:size,2:9]  + 0.5 * subdata[1][0:size,2:9] + 0.5 * subdata[2][0:size,2:9] + 1 * subdata[3][0:size,2:9]
+                #emo_7 = subdata[0][0:size, 2:9]
                 for j in emo_7:
                     t = j[0:7]
                     emo_max = np.argmax(t)
                     if emo_max != 3:
                         if j[emo_max] != 0:
-                            e[np.argmax(j)] += 1
+                            e[np.argmax(j)] += 1#j[emo_max]
                         else:
                             e[3] += 1
 
                 e /= np.sum(e)
 
+            # get val of a session
+            val_arr = np.zeros(3)
+            if size > 0 and size != 1000:
+                val = 0.4 * subdata[0][0:size,9]  + 0.1* subdata[1][0:size,9] + 0.1*subdata[2][0:size,9] + 0.4*subdata[3][0:size,9]
+                val_arr = np.array([val[val==0].shape[0], val[val>0].shape[0], val[val<0].shape[0]])
+                val_arr = val_arr/size
+
             temp = np.hstack((temp, e))
+            temp = np.hstack((temp, val_arr))
             temp = temp[1:]
             
             
@@ -88,9 +96,7 @@ def get_data(num, folder):
 def get_time(no):
 
     feltEmo = []
-    beg_smp = []
-    end_smp = []
-    vidrate = []
+
 
     try:
         xmldoc = minidom.parse('./Sessions/'+str(no)+'/session.xml')
@@ -100,9 +106,7 @@ def get_time(no):
         for s in sess:
             try:
                 feltEmo.append(float(s.attributes['feltEmo'].value))
-                beg_smp.append(float(s.attributes['vidBeginSmp'].value))
-                end_smp.append(float(s.attributes['vidEndSmp'].value))
-                vidrate.append(float(s.attributes['vidRate'].value))
+
             except KeyError:
                 print('invalid xml file')
     except FileNotFoundError:
