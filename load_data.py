@@ -21,13 +21,14 @@ def get_data(num, folder):
         
         while k < limit:
             subdata = []
-            emo, rate, beg, end = get_time(folder[i]+k)
+            emo = get_time(folder[i]+k)
+            beg, end = get_t()
             label.append(get_val(emo))
             size = 1000
             for no in range(1,5):
                 try:
-                sql = 'select * from emotions'+str(folder[i]+k)+'_'+str(no) 
-                c.execute(sql)
+                    sql = 'select * from emotions'+str(folder[i]+k)+'_'+str(no) 
+                    c.execute(sql)
                 except sqlite3.OperationalError:
                     break
                 subdata.append(c.fetchall())
@@ -36,10 +37,10 @@ def get_data(num, folder):
                 if subdata[no-1].shape[0] == 0:
                     break
 
-                # corp video
-                mask = subdata[no-1][:,0] > 0
-                subdata[no-1] = subdata[no-1][mask, :]                                
-                mask = subdata[no-1][:,0] < (end - beg)/rate 
+                # # corp video
+                # mask = subdata[no-1][:,0] > 0
+                # subdata[no-1] = subdata[no-1][mask, :]                                
+                mask = subdata[no-1][:,0] < (float(end[str(folder[i]+k)]) - float(beg[str(folder[i]+k)]))/256 
                 subdata[no-1] = subdata[no-1][mask, :]
 
                 # drop frame when face is lost and calc the percentage
@@ -54,13 +55,13 @@ def get_data(num, folder):
             
             # joy, sad, disgust, neutral, anger, fear, surprise
             temp = np.zeros(1)
-            # for ii in range(0, 4):
-                # get percentage of 9 emotion
+            
+            # get percentage of 9 emotion
             e = np.array([0, 0, 0, 0, 0, 0, 0], dtype=np.float64)
             if size > 0 and size != 1000:
-            #     emo_7 = subdata[ii][:, 2:9]
+                # emo_7 = subdata[ii][:, 2:9]
                 emo_7 = 0.4 * subdata[0][0:size,2:9] + 0.25 * subdata[1][0:size,2:9] + 0.25 * subdata[2][0:size,2:9] + 0.1 * subdata[3][0:size,2:9]
-                #emo_7 = subdata[2][0:size, 2:9]
+                # emo_7 = subdata[0][0:size, 2:9]
                 for j in emo_7:
                     t = j[0:7]
                     emo_max = np.argmax(t)
@@ -71,25 +72,11 @@ def get_data(num, folder):
                             e[3] += 1
 
                 e /= np.sum(e)
-                
-            # print(e)
-            # val = subdata[0][:,[9, 20, 31, 42]]
-            # sublabel = 0.4 * val[:,0] +0.25 * val[:,1] + 0.25 * val[:,2] + 0.1 * val[:,3]
+
             temp = np.hstack((temp, e))
             temp = temp[1:]
             
-            # l = 0
-
-            # while l < sublabel.shape[0]:
-            #     if sublabel[l] > 10:
-            #         sublabel[l] = 1
-            #     else:
-            #         if sublabel[l] < 0:
-            #             sublabel[l] = -1
-            #         else:
-            #             sublabel[l] = 0
-            #     l += 1 
-            # print(data.shape, temp.shape)
+            
             data = np.vstack((data, temp))
             k += 2
 
@@ -121,7 +108,7 @@ def get_time(no):
     except FileNotFoundError:
         print(str(no) + '/session.xml not exist')
             
-    return feltEmo[0], vidrate[0], beg_smp[0], end_smp[0]
+    return feltEmo[0]   #, vidrate[0],beg_smp[0], end_smp[0]
 
 
 def get_val(emo):
@@ -138,10 +125,11 @@ def get_val(emo):
 def get_t():
     begin = {}
     end = {}
-    with open('begin_end.csv', 'rb') as csvfile:
+    with open('begin_end.csv', 'r') as csvfile:
         reader = csv.reader(csvfile)
         for row in reader:
             begin[row[0]] = row[2]
             end[row[0]] = row[3]
+    
     return begin, end
         
