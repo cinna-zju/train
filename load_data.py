@@ -37,7 +37,7 @@ def get_data_7(num, folder):
                     break
 
                 # corp video                             
-                mask = subdata[no-1][:,0] > (float(end[str(folder[i]+k)]) - float(beg[str(folder[i]+k)]))/256 
+                mask = subdata[no-1][:,0] < (float(end[str(folder[i]+k)]) - float(beg[str(folder[i]+k)]))/256 
                 subdata[no-1] = subdata[no-1][mask, :]
 
                 # drop frame when face is lost and calc the percentage
@@ -117,6 +117,14 @@ def get_val(emo):
         else:
             return -1
 
+def get_aro(emo):
+    if emo == 5 or emo == 2 or emo == 0:
+        return 0
+    else:
+        if emo == 4 or emo == 11:
+            return 1
+        else:
+            return 2
 
 def get_t():
     begin = {}
@@ -132,7 +140,7 @@ def get_t():
 
 
 def get_data_28(num, folder):
-    data = np.zeros((1,28))
+    data = np.zeros((1,32))
     label = []
     num_detec = np.zeros(4)
     frame = np.zeros(4)
@@ -166,7 +174,7 @@ def get_data_28(num, folder):
                     break
 
                 # corp video                             
-                mask = subdata[no-1][:,0] > (float(end[str(folder[i]+k)]) - float(beg[str(folder[i]+k)]))/256 
+                mask = subdata[no-1][:,0] < (float(end[str(folder[i]+k)]) - float(beg[str(folder[i]+k)]))/256 
                 subdata[no-1] = subdata[no-1][mask, :]
 
                 # drop frame when face is lost and calc the percentage
@@ -199,6 +207,14 @@ def get_data_28(num, folder):
                                 e[3] += 1
 
                     e /= np.sum(e)
+                a = np.zeros(4)
+                for iii in range(0,4):
+                    v = subdata[iii][:,7]
+                    if v[v>0].shape[0] > v[v<0].shape[0] and v[v>0].shape[0]> 5:
+                        a[iii] = 1
+                    if v[v>0].shape[0] < v[v<0].shape[0] and v[v<0].shape[0] >5:
+                        a[iii] = -1
+                e = np.hstack((e, a))
                 data = np.vstack((data, e))
                 label.append(get_val(emo))
 
