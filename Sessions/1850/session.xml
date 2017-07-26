@@ -1,0 +1,31 @@
+<?xml version="1.0" ?>
+<session sessionId="1850" date="2009-08-27" time="10:02:03" experimentType="emotion elicitation" isStim="1" cutNr="30" cutLenSec="93.881" vidRate="60.9708" audRate="48000" audBeginSmp="90523330.5" audEndSmp="95029618.5" vidBeginSmp="114946.5" vidEndSmp="120670.5" mediaFile="30.avi">
+    <subject id="15" hasBeard="False" hasMoustache="False" hasGlasses="False"/>
+    <track filename="P15-Rec1-2009.08.27.10.00.23_BW1 _BW_Section_30.avi" id="1850.1" type="Video" color="0" view="0" camera="2">
+         <annotation filename="P15-Rec1-All-Data-New_Section_30.tsv" id="1850.1.1" type="Gaze" />
+         <annotation filename="P15-Rec1-Guide-Cut.tsv" id="1850.1.2" type="GuideCut" />
+    </track>
+    <track filename="P15-Rec1-2009.08.27.10.00.23_BW2 _BW_Section_30.avi" id="1850.2" type="Video" color="0" view="0" camera="3">
+         <annotation filename="P15-Rec1-All-Data-New_Section_30.tsv" id="1850.2.1" type="Gaze" />
+         <annotation filename="P15-Rec1-Guide-Cut.tsv" id="1850.2.2" type="GuideCut" />
+    </track>
+    <track filename="P15-Rec1-2009.08.27.10.00.23_BW3 _BW_Section_30.avi" id="1850.3" type="Video" color="0" view="0" camera="4">
+         <annotation filename="P15-Rec1-All-Data-New_Section_30.tsv" id="1850.3.1" type="Gaze" />
+         <annotation filename="P15-Rec1-Guide-Cut.tsv" id="1850.3.2" type="GuideCut" />
+    </track>
+    <track filename="P15-Rec1-2009.08.27.10.00.23_BW4 _BW_Section_30.avi" id="1850.4" type="Video" color="0" view="0" camera="5">
+         <annotation filename="P15-Rec1-All-Data-New_Section_30.tsv" id="1850.4.1" type="Gaze" />
+         <annotation filename="P15-Rec1-Guide-Cut.tsv" id="1850.4.2" type="GuideCut" />
+    </track>
+    <track filename="P15-Rec1-2009.08.27.10.00.23_BW5 _BW_Section_30.avi" id="1850.5" type="Video" color="0" view="1" camera="6">
+         <annotation filename="P15-Rec1-All-Data-New_Section_30.tsv" id="1850.5.1" type="Gaze" />
+         <annotation filename="P15-Rec1-Guide-Cut.tsv" id="1850.5.2" type="GuideCut" />
+    </track>
+    <track filename="P15-Rec1-2009.08.27.10.00.23_C1 trigger _C_Section_30.avi" id="1850.6" type="Video" color="1" view="0" camera="1">
+         <annotation filename="P15-Rec1-All-Data-New_Section_30.tsv" id="1850.6.1" type="Gaze" />
+         <annotation filename="P15-Rec1-Guide-Cut.tsv" id="1850.6.2" type="GuideCut" />
+    </track>
+    <track filename="P15-Rec1-Audio_Section_30.wav" id="1850.7" type="Audio" channel="2">
+         <annotation filename="P15-Rec1-Guide-Cut.tsv" id="1850.7.1" type="GuideCut" />
+    </track>
+</session>
