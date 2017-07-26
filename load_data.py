@@ -23,7 +23,6 @@ def get_data_7(num, folder):
             subdata = []
             emo = get_time(folder[i]+k)
             beg, end = get_t()
-            label.append(get_val(emo))
             size = 1000
             for no in range(1,5):
                 try:
@@ -47,8 +46,6 @@ def get_data_7(num, folder):
                 mask = np.array(subdata[no-1][:,1], dtype=np.bool)
                 subdata[no-1] = subdata[no-1][mask]
 
-
-
                 if size > subdata[no-1].shape[0]:
                     size = subdata[no-1].shape[0]
             
@@ -59,7 +56,7 @@ def get_data_7(num, folder):
             e = np.array([0, 0, 0, 0, 0, 0, 0], dtype=np.float64)
             if size > 0 and size != 1000:
                 # emo_7 = subdata[ii][:, 2:9]
-                # emo_7 = 1.5 * subdata[0][0:size,2:9]  + 0.5 * subdata[1][0:size,2:9] + 0.5 * subdata[2][0:size,2:9] + 1 * subdata[3][0:size,2:9]
+                emo_7 = 1.5 * subdata[0][0:size,2:9]  + 0.5 * subdata[1][0:size,2:9] + 0.5 * subdata[2][0:size,2:9] + 1 * subdata[3][0:size,2:9]
                 #emo_7 = subdata[0][0:size, 2:9]
                 
                 for j in emo_7:
@@ -79,19 +76,17 @@ def get_data_7(num, folder):
                 val = 0.4 * subdata[0][0:size,9]  + 0.1* subdata[1][0:size,9] + 0.1*subdata[2][0:size,9] + 0.4*subdata[3][0:size,9]
                 val_arr = np.array([val[val==0].shape[0], val[val>0].shape[0], val[val<0].shape[0]])
                 val_arr = val_arr/size
-
-            temp = np.hstack((temp, e))
-            temp = np.hstack((temp, val_arr))
-            temp = temp[1:]
-            
-            
-            data = np.vstack((data, temp))
+                temp = np.hstack((temp, e))
+                temp = np.hstack((temp, val_arr))
+                temp = temp[1:]
+                data = np.vstack((data, temp))
+                label.append(get_val(emo))
+                
             k += 2
-
         conn.close()       
         loss = 1 - num_detec/frame
         
-    return np.array(label), data[1:,:], loss 
+    return np.array(label), data[1:,:]
     
 def get_time(no):
 
@@ -136,8 +131,8 @@ def get_t():
 
 
 
-def get_data_with_train(num, folder):
-    data = np.zeros((1,10))
+def get_data_28(num, folder):
+    data = np.zeros((1,28))
     label = []
     num_detec = np.zeros(4)
     frame = np.zeros(4)
@@ -149,13 +144,14 @@ def get_data_with_train(num, folder):
 
         if(folder[i] == 1952):
             limit = 32
+        if(folder[i] == 262):
+            limit = 32
         
         while k < limit:
             subdata = []
             result1 = np.zeros(7)
             emo = get_time(folder[i]+k)
             beg, end = get_t()
-            label.append(get_val(emo))
             size = 1000
             for no in range(1,5):
                 try:
@@ -179,23 +175,33 @@ def get_data_with_train(num, folder):
                 mask = np.array(subdata[no-1][:,1], dtype=np.bool)
                 subdata[no-1] = subdata[no-1][mask]
 
-
-
                 if size > subdata[no-1].shape[0]:
                     size = subdata[no-1].shape[0]
-
 
             if size > 0 and size!=1000:
                 temp = subdata[0][0:size, 2:9]
                 for j in range(1,4):
                     temp = np.hstack((temp, subdata[j][0:size, 2:9]))
 
-            clf1 = pt.pretrain()
-            for j in temp:
-                result1 += clf1.predict(j)
+                
+                e = np.zeros(28)
 
-            result1 /= np.sum(result1)
-            data = np.vstack((data, result1))
+                for iii in range(0,4):
+                    emo_7 = temp[:, iii*7:7+iii*7] 
+                
+                    for j in emo_7:
+                        t = j[0:7]
+                        emo_max = np.argmax(t)
+                        if emo_max != 3:
+                            if j[emo_max] != 0:
+                                e[np.argmax(j)] += 1#j[emo_max]
+                            else:
+                                e[3] += 1
+
+                    e /= np.sum(e)
+                data = np.vstack((data, e))
+                label.append(get_val(emo))
+
 
             k += 2
     return np.array(label), data[1:, :]
