@@ -16,9 +16,9 @@ def get_data_7(num, folder):
         k = 0
         limit = 40
 
-        if folder[i] == 1952:
+        if folder[i] == 1952 or folder[i]==1822:
             limit = 32
-        if folder[i]==262:
+        if folder[i]==262 or folder[i]==1822:
             limit = 34
         while k < limit:
             subdata = []
@@ -81,6 +81,7 @@ def get_data_7(num, folder):
                 temp = np.hstack((temp, val_arr))
                 temp = temp[1:]
                 data = np.vstack((data, temp))
+                # mode
                 label.append(get_val(emo))
                 
             k += 2
@@ -102,7 +103,7 @@ def get_time(no):
                 feltEmo.append(float(s.attributes['feltEmo'].value))
 
             except KeyError:
-                print('invalid xml file')
+                print('invalid xml file', no)
     except FileNotFoundError:
         print(str(no) + '/session.xml not exist')
             
