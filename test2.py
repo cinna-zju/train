@@ -11,7 +11,7 @@ from matplotlib import pyplot as plt
 # 392, 522, 782, 912, 1172, 1562,  2732   
 # 8
 # 1822 no siganl
-folder = [2, 132,  262, 392, 522, 652, 
+folder = [2, 132,  262, 392, 522, 652, 3122,
     782, 1302,912, 1172, 1562, 
     1692, 1952, 2082,2212, 2342, 
     2472, 2602, 2732,2862, 2992, 
@@ -23,7 +23,7 @@ for i in folder:
     test_folder.append(i)
     train_folder = folder[:]
     train_folder.remove(i)
-    label, data = ld.get_data_7(24, train_folder)
+    label, data = ld.get_data_7(25, train_folder)
     label_test, data_test = ld.get_data_7(1, test_folder)
     clf = tr.train(label, data)
     # confusion = np.zeros([3,3])

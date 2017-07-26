@@ -6,7 +6,7 @@ import csv
 import pretrain as pt
 def get_data_7(num, folder):
     
-    data = np.zeros((1,10))
+    data = np.zeros((1,13))
     label = []
     num_detec = np.zeros(4)
     frame = np.zeros(4)
@@ -30,11 +30,13 @@ def get_data_7(num, folder):
                     sql = 'select * from emotions'+str(folder[i]+k)+'_'+str(no) 
                     c.execute(sql)
                 except sqlite3.OperationalError:
+                    #print(folder[i]+k, "sql error")
                     break
                 subdata.append(c.fetchall())
                 subdata[no-1] = np.array(subdata[no-1], dtype=np.float32)
 
                 if subdata[no-1].shape[0] == 0:
+                    #print(folder[i]+k, "size = 0")
                     break
 
                 # corp video                             
@@ -72,13 +74,19 @@ def get_data_7(num, folder):
                 e /= np.sum(e)
 
             # get val of a session
-            val_arr = np.zeros(3)
             if size > 0 and size != 1000:
                 val = 0.4 * subdata[0][0:size,9]  + 0.1* subdata[1][0:size,9] + 0.1*subdata[2][0:size,9] + 0.4*subdata[3][0:size,9]
                 val_arr = np.array([val[val==0].shape[0], val[val>0].shape[0], val[val<0].shape[0]])
                 val_arr = val_arr/size
+
+                ega = 0.4 * subdata[0][0:size,10]  + 0.1* subdata[1][0:size,10] + 0.1*subdata[2][0:size,10] + 0.4*subdata[3][0:size,10]
+                ega_arr = np.array([ega[ega > 66].shape[0], 
+                    size - ega[ega > 66].shape[0] - ega[ega<33].shape[0],
+                    ega[ega<33].shape[0]])
+                ega_arr = ega_arr/size
                 temp = np.hstack((temp, e))
                 temp = np.hstack((temp, val_arr))
+                temp = np.hstack((temp, ega_arr))
                 temp = temp[1:]
                 data = np.vstack((data, temp))
                 # mode
