@@ -16,10 +16,10 @@ def get_data_7(num, folder):
         k = 0
         limit = 40
 
-        if folder[i] == 1952 or folder[i]==1822:
-            limit = 32
-        if folder[i]==262 or folder[i]==1822:
+        if folder[i]==262:
             limit = 34
+        if  folder[i]==1952:
+            limit = 32 #1984 xml damaged
         while k < limit:
             subdata = []
             emo = get_time(folder[i]+k)
