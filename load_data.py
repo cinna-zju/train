@@ -39,16 +39,13 @@ def get_data_7(num, folder):
                 # corp video                             
                 mask = subdata[no-1][:,0] < (float(end[str(folder[i]+k)]) - float(beg[str(folder[i]+k)]))/256 
                 subdata[no-1] = subdata[no-1][mask, :]
-                if folder[i]+k == 936 or folder[i]+k ==2248 or folder[i]+k ==2250 or folder[i]+k ==1340:
-                    print('time', folder[i]+k, subdata[no-1].shape[0])
 
                 # drop frame when face is lost and calc the percentage
                 num_detec[no-1] += sum(subdata[no-1][:,1])
                 frame[no-1] += subdata[no-1].shape[0]
                 mask = np.array(subdata[no-1][:,1], dtype=np.bool)
                 subdata[no-1] = subdata[no-1][mask]
-                if folder[i]+k == 936 or folder[i]+k ==2248 or folder[i]+k ==2250 or folder[i]+k ==1340:
-                    print('num', folder[i]+k, subdata[no-1].shape[0])
+
                 if size > subdata[no-1].shape[0]:
                     size = subdata[no-1].shape[0]
 
@@ -59,9 +56,8 @@ def get_data_7(num, folder):
             
             # get percentage of 9 emotion
             e = np.array([0, 0, 0, 0, 0, 0, 0], dtype=np.float64)
-            if size == 0 or size == 1000:
-                print(folder[i]+k, 'size error', size)
-                # emo_7 = subdata[ii][:, 2:9]
+
+            # emo_7 = subdata[ii][:, 2:9]
             emo_7 = 1.5 * subdata[0][0:size,2:9]  + 0.5 * subdata[1][0:size,2:9] + 0.5 * subdata[2][0:size,2:9] + 1 * subdata[3][0:size,2:9]
             #emo_7 = subdata[0][0:size, 2:9]
             
