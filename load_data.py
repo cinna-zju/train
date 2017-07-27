@@ -20,6 +20,8 @@ def get_data_7(num, folder):
             limit = 34
         if  folder[i]==1952:
             limit = 32 #1984 xml damaged
+        if folder[i]==1042:
+            limit = 28
         while k < limit:
             subdata = []
             emo = get_time(folder[i]+k)
@@ -59,7 +61,7 @@ def get_data_7(num, folder):
 
             # emo_7 = subdata[ii][:, 2:9]
             emo_7 = 1.5 * subdata[0][0:size,2:9]  + 0.5 * subdata[1][0:size,2:9] + 0.5 * subdata[2][0:size,2:9] + 1 * subdata[3][0:size,2:9]
-            #emo_7 = subdata[0][0:size, 2:9]
+            # emo_7 = subdata[0][0:size, 2:9]
             
             for j in emo_7:
                 t = j[0:7]
@@ -74,11 +76,11 @@ def get_data_7(num, folder):
 
             # get val of a session
             if size > 0 and size != 1000:
-                val = 0.4 * subdata[0][0:size,9]  + 0.1* subdata[1][0:size,9] + 0.1*subdata[2][0:size,9] + 0.4*subdata[3][0:size,9]
+                val = 1 * 0.4 * subdata[0][0:size,9]  + 0.1* subdata[1][0:size,9] + 0.1*subdata[2][0:size,9] + 0.4*subdata[3][0:size,9]
                 val_arr = np.array([val[val==0].shape[0], val[val>0].shape[0], val[val<0].shape[0]])
                 val_arr = val_arr/size
 
-                ega = 0.4 * subdata[0][0:size,10]  + 0.1* subdata[1][0:size,10] + 0.1*subdata[2][0:size,10] + 0.4*subdata[3][0:size,10]
+                ega = 0.4  * subdata[0][0:size,10] # + 0.1* subdata[1][0:size,10] + 0.1*subdata[2][0:size,10] + 0.4*subdata[3][0:size,10]
                 ega_arr = np.array([ega[ega > 66].shape[0], 
                     size - ega[ega > 66].shape[0] - ega[ega<33].shape[0],
                     ega[ega<33].shape[0]])
@@ -89,7 +91,7 @@ def get_data_7(num, folder):
                 temp = temp[1:]
                 data = np.vstack((data, temp))
                 # mode
-                label.append(get_aro(emo))
+                label.append(get_val(emo))
                 
             k += 2
         conn.close()       

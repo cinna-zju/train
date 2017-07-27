@@ -14,7 +14,7 @@ def train(label, data):
     
     clf = svm.SVC(kernel='rbf') #0.526
 
-    # clf = RandomForestClassifier() #0.45
+    #clf = RandomForestClassifier() #0.45
 
     # clf = GradientBoostingClassifier() #0.426
 
