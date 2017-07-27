@@ -23,7 +23,8 @@ for i in folder:
     test_folder.append(i)
     train_folder = folder[:]
     train_folder.remove(i)
-    label, data = ld.get_data_7(25, train_folder)
+    label, data= ld.get_data_7(25, train_folder)
+    
     label_test, data_test = ld.get_data_7(1, test_folder)
     clf = tr.train(label, data)
     # confusion = np.zeros([3,3])

@@ -24,41 +24,37 @@ for i in folder:
         subdata = []
         beg, end = ld.get_t()
         for no in range(1,5):
-            try:
-                sql = 'select * from emotions'+str(i+k)+'_'+str(no)
-                c.execute(sql)
-            except sqlite3.OperationalError:
-                break
+            
+            sql = 'select * from emotions'+str(i+k)+'_'+str(no)
+            c.execute(sql)
             subdata.append(c.fetchall())
             subdata[no-1] = np.array(subdata[no-1], dtype=np.float32)
-            if subdata[no-1].shape[0] == 0:
-                break
+
             # corp video                             
             mask = subdata[no-1][:,0] < (float(end[str(i+k)]) - float(beg[str(i+k)]))/256 
             subdata[no-1] = subdata[no-1][mask, :]
 
             if size > subdata[no-1].shape[0]:
                 size = subdata[no-1].shape[0]
-        try:
-            aro = []
-            emo_7 = 1.5 * subdata[0][0:size,2:9]  + 0.5 * subdata[1][0:size,2:9] + 0.5 * subdata[2][0:size,2:9] + 1 * subdata[3][0:size,2:9]
+        
+        aro = []
+        emo_7 = 1.5 * subdata[0][0:size,2:9]  + 0.5 * subdata[1][0:size,2:9] + 0.5 * subdata[2][0:size,2:9] + 1 * subdata[3][0:size,2:9]
 
-            for j in emo_7:
-                t = j[0:7]
-                emo_max = np.argmax(t)
-                if j[emo_max] != 0:
-                    if emo_max == 1 or emo_max == 2:
-                        aro.append(0)
-                    if emo_max == 0:
-                        aro.append(1)
-                    else:
-                        aro.append(2)
-                else:
+        for j in emo_7:
+            t = j[0:7]
+            emo_max = np.argmax(t)
+            if j[emo_max] != 0:
+                if emo_max == 1 or emo_max == 2:
                     aro.append(0)
-            aro = np.array(aro)
-            meta = np.array([i+k, aro.shape[0]])
-            line = np.hstack((meta, aro))
-            writer.writerow(line)
-        except IndexError:
-            print("error", i+k)
+                if emo_max == 0:
+                    aro.append(1)
+                else:
+                    aro.append(2)
+            else:
+                aro.append(0)
+        aro = np.array(aro)
+        meta = np.array([i+k, aro.shape[0]])
+        line = np.hstack((meta, aro))
+        writer.writerow(line)
+
         k+=2

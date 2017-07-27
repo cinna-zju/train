@@ -36,6 +36,7 @@ for i in folder:
             subdata.append(c.fetchall())
             subdata[no-1] = np.array(subdata[no-1], dtype=np.float32)
             if subdata[no-1].shape[0] == 0:
+                print(i+k, '0')
                 break
             # corp video                             
             mask = subdata[no-1][:,0] < (float(end[str(i+k)]) - float(beg[str(i+k)]))/256 

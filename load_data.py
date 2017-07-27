@@ -26,52 +26,55 @@ def get_data_7(num, folder):
             beg, end = get_t()
             size = 1000
             for no in range(1,5):
-                try:
-                    sql = 'select * from emotions'+str(folder[i]+k)+'_'+str(no) 
-                    c.execute(sql)
-                except sqlite3.OperationalError:
-                    #print(folder[i]+k, "sql error")
-                    break
+                
+                sql = 'select * from emotions'+str(folder[i]+k)+'_'+str(no) 
+                c.execute(sql)
+
                 subdata.append(c.fetchall())
                 subdata[no-1] = np.array(subdata[no-1], dtype=np.float32)
 
-                if subdata[no-1].shape[0] == 0:
-                    #print(folder[i]+k, "size = 0")
-                    break
-
+                # if subdata[no-1].shape[0] == 0:
+                #     print(folder[i]+k, "size = 0")
+                    
                 # corp video                             
                 mask = subdata[no-1][:,0] < (float(end[str(folder[i]+k)]) - float(beg[str(folder[i]+k)]))/256 
                 subdata[no-1] = subdata[no-1][mask, :]
+                if folder[i]+k == 936 or folder[i]+k ==2248 or folder[i]+k ==2250 or folder[i]+k ==1340:
+                    print('time', folder[i]+k, subdata[no-1].shape[0])
 
                 # drop frame when face is lost and calc the percentage
                 num_detec[no-1] += sum(subdata[no-1][:,1])
                 frame[no-1] += subdata[no-1].shape[0]
                 mask = np.array(subdata[no-1][:,1], dtype=np.bool)
                 subdata[no-1] = subdata[no-1][mask]
-
+                if folder[i]+k == 936 or folder[i]+k ==2248 or folder[i]+k ==2250 or folder[i]+k ==1340:
+                    print('num', folder[i]+k, subdata[no-1].shape[0])
                 if size > subdata[no-1].shape[0]:
                     size = subdata[no-1].shape[0]
+
             
             # joy, sad, disgust, neutral, anger, fear, surprise
             temp = np.zeros(1)
             
+            
             # get percentage of 9 emotion
             e = np.array([0, 0, 0, 0, 0, 0, 0], dtype=np.float64)
-            if size > 0 and size != 1000:
+            if size == 0 or size == 1000:
+                print(folder[i]+k, 'size error', size)
                 # emo_7 = subdata[ii][:, 2:9]
-                emo_7 = 1.5 * subdata[0][0:size,2:9]  + 0.5 * subdata[1][0:size,2:9] + 0.5 * subdata[2][0:size,2:9] + 1 * subdata[3][0:size,2:9]
-                #emo_7 = subdata[0][0:size, 2:9]
-                
-                for j in emo_7:
-                    t = j[0:7]
-                    emo_max = np.argmax(t)
-                    if emo_max != 3:
-                        if j[emo_max] != 0:
-                            e[np.argmax(j)] += 1#j[emo_max]
-                        else:
-                            e[3] += 1
+            emo_7 = 1.5 * subdata[0][0:size,2:9]  + 0.5 * subdata[1][0:size,2:9] + 0.5 * subdata[2][0:size,2:9] + 1 * subdata[3][0:size,2:9]
+            #emo_7 = subdata[0][0:size, 2:9]
+            
+            for j in emo_7:
+                t = j[0:7]
+                emo_max = np.argmax(t)
+                if emo_max != 3:
+                    if j[emo_max] != 0:
+                        e[np.argmax(j)] += 1#j[emo_max]
+                    else:
+                        e[3] += 1
 
-                e /= np.sum(e)
+            e /= np.sum(e)
 
             # get val of a session
             if size > 0 and size != 1000:
@@ -90,7 +93,7 @@ def get_data_7(num, folder):
                 temp = temp[1:]
                 data = np.vstack((data, temp))
                 # mode
-                label.append(get_val(emo))
+                label.append(get_aro(emo))
                 
             k += 2
         conn.close()       
