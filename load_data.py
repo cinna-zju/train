@@ -45,8 +45,8 @@ def get_data_7(num, folder):
                 # drop frame when face is lost and calc the percentage
                 num_detec[no-1] += sum(subdata[no-1][:,1])
                 frame[no-1] += subdata[no-1].shape[0]
-                mask = np.array(subdata[no-1][:,1], dtype=np.bool)
-                subdata[no-1] = subdata[no-1][mask]
+                # mask = np.array(subdata[no-1][:,1], dtype=np.bool)
+                # subdata[no-1] = subdata[no-1][mask]
 
                 if size > subdata[no-1].shape[0]:
                     size = subdata[no-1].shape[0]
@@ -60,7 +60,7 @@ def get_data_7(num, folder):
             e = np.array([0, 0, 0, 0, 0, 0, 0], dtype=np.float64)
 
             # emo_7 = subdata[ii][:, 2:9]
-            emo_7 = 1.5 * subdata[0][0:size,2:9]  + 0.5 * subdata[1][0:size,2:9] + 0.5 * subdata[2][0:size,2:9] + 1 * subdata[3][0:size,2:9]
+            emo_7 = 1.0* subdata[0][0:size,2:9] # + 0.5 * subdata[1][0:size,2:9] + 0.5 * subdata[2][0:size,2:9] + 1 * subdata[3][0:size,2:9]
             # emo_7 = subdata[0][0:size, 2:9]
             
             for j in emo_7:
@@ -76,11 +76,11 @@ def get_data_7(num, folder):
 
             # get val of a session
             if size > 0 and size != 1000:
-                val = 1 * 0.4 * subdata[0][0:size,9]  + 0.1* subdata[1][0:size,9] + 0.1*subdata[2][0:size,9] + 0.4*subdata[3][0:size,9]
+                val = 1 * 1 * subdata[0][0:size,9] # + 0.1* subdata[1][0:size,9] + 0.1*subdata[2][0:size,9] + 0.4*subdata[3][0:size,9]
                 val_arr = np.array([val[val==0].shape[0], val[val>0].shape[0], val[val<0].shape[0]])
                 val_arr = val_arr/size
 
-                ega = 0.4  * subdata[0][0:size,10] # + 0.1* subdata[1][0:size,10] + 0.1*subdata[2][0:size,10] + 0.4*subdata[3][0:size,10]
+                ega = 1  * subdata[0][0:size,10] # + 0.1* subdata[1][0:size,10] + 0.1*subdata[2][0:size,10] + 0.4*subdata[3][0:size,10]
                 ega_arr = np.array([ega[ega > 66].shape[0], 
                     size - ega[ega > 66].shape[0] - ega[ega<33].shape[0],
                     ega[ega<33].shape[0]])

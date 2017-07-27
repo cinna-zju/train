@@ -33,12 +33,13 @@ for i in folder:
         result = clf.predict(data_test[j,:].reshape(1, -1))
         if label_test[j] == result:
             cnt += 1
-        confusion[int(label[j]+1), int(result+1)] += 1
+        confusion[int(label_test[j]+1), int(result+1)] += 1
    
     accu.append(cnt/data_test.shape[0])
     print("test_folder: ", i, 'train sample: ', label.shape[0], 'test sample: ', label_test.shape[0])
     print(confusion/np.sum(confusion))     
     print('accuracy: ', accu[-1])
+    print('all', accu)
 print('average: ', np.mean(accu), 'std', np.std(accu))
 
 

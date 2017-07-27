@@ -12,7 +12,7 @@ from sklearn.linear_model import LogisticRegression
 
 def train(label, data):
     
-    clf = svm.SVC(kernel='rbf') #0.526
+	clf = svm.SVC(kernel='rbf') #0.526
 
     #clf = RandomForestClassifier() #0.45
 
@@ -20,10 +20,10 @@ def train(label, data):
 
     # clf = AdaBoostClassifier()  #0.442
     
-    # clf = KNeighborsClassifier() # 0.426
+    #clf = KNeighborsClassifier() # 0.426
 
     #clf = LogisticRegression()
-    clf.fit(data, label)
-    return clf 
+	clf.fit(data, label)
+	return clf 
 
 
