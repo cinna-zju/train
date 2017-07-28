@@ -23,9 +23,9 @@ for i in folder:
     test_folder.append(i)
     train_folder = folder[:]
     train_folder.remove(i)
-    label, data= ld.get_data_7(26, train_folder)
+    label, data= ld.get_data_28(26, train_folder)
     
-    label_test, data_test = ld.get_data_7(1, test_folder)
+    label_test, data_test = ld.get_data_28(1, test_folder)
     clf = tr.train(label, data)
     confusion = np.zeros([3,3])
     cnt = 0
@@ -39,7 +39,7 @@ for i in folder:
     print("test_folder: ", i, 'train sample: ', label.shape[0], 'test sample: ', label_test.shape[0])
     print(confusion/np.sum(confusion))     
     print('accuracy: ', accu[-1])
-    print('all', accu)
+print('all', accu)
 print('average: ', np.mean(accu), 'std', np.std(accu))
 
 

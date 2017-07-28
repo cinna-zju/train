@@ -30,7 +30,7 @@ for i in range(0, 27):
     while k < limit:
         subdata = []
         size = []
-        
+
         for no in range(1,5):
             
             sql = 'select * from emotions'+str(folder[i]+k)+'_'+str(no) 
@@ -39,9 +39,12 @@ for i in range(0, 27):
             a = c.fetchall()
             size.append(len(a))
 
+            
+
 
 
         std = np.std(size)
+
         if std > 30:
             print(folder[i]+k, np.std(size))
         cnt += 1
