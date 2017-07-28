@@ -1,11 +1,11 @@
 import sqlite3
 
 #1958, 1972, 1974, 2082, 3126
-conn = sqlite3.connect('./data/ttttt')
+conn = sqlite3.connect('./data/ttt')
 c = conn.cursor()
 #282 284 660 664 670 688 1312 1314 1318
-sess = 1576
-conn2 = sqlite3.connect('./data/1562')
+sess =  280
+conn2 = sqlite3.connect('./data/262')
 c2 = conn2.cursor()
 
 for no in range(1,5):

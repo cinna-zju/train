@@ -36,14 +36,11 @@ for i in range(0, 27):
             sql = 'select * from emotions'+str(folder[i]+k)+'_'+str(no) 
             c.execute(sql)
 
-            a = c.fetchall()
-            size.append(len(a))
-
-
-
-        std = np.std(size)
-        if std > 30:
-            print(folder[i]+k, np.std(size))
-        cnt += 1
+            subdata.append(c.fetchall())
+            subdata[no-1] = np.array(subdata[no-1])
+        
+    
+        print('start', i, folder[i])
+        io.savemat('./mat/'+str(folder[i]+k)+'.mat', {'FR':subdata[0], 'BR':subdata[1], 'BL':subdata[2], 'TO':subdata[3]})
+        print('end', i, folder[i])
         k+=2
-print(cnt)
