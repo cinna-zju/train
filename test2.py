@@ -1,9 +1,7 @@
 import numpy as np
 import load_data as ld
 import train as tr
-from sklearn import svm
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.model_selection import StratifiedKFold
+
 from matplotlib import pyplot as plt
 
 
@@ -11,11 +9,12 @@ from matplotlib import pyplot as plt
 # 392, 522, 782, 912, 1172, 1562,  2732   
 # 8
 # 1822 no siganl
-folder = [2, 132,  262, 392, 522, 652, 3122, 1042,
-    782, 1302,912, 1172, 1562, 
-    1692, 1952, 2082,2212, 2342, 
-    2472, 2602, 2732,2862, 2992, 
-    3382, 3512, 3642, 3772] #
+folder = [2, 132,  262, 392, 522, 
+652, 782,912, 1042, 1172,1302 ,
+1562, 1692, 1952, 2082,2212, 
+2342,2472,2602,2732,2862,
+2992,3122,3382,3512,3642,
+3772]
 accu = []
 for i in folder:
     test_folder = []
@@ -23,9 +22,9 @@ for i in folder:
     test_folder.append(i)
     train_folder = folder[:]
     train_folder.remove(i)
-    label, data= ld.get_data_28(26, train_folder)
+    label, data= ld.get_data_7(26, train_folder)
     
-    label_test, data_test = ld.get_data_28(1, test_folder)
+    label_test, data_test = ld.get_data_7(1, test_folder)
     clf = tr.train(label, data)
     confusion = np.zeros([3,3])
     cnt = 0

@@ -37,10 +37,10 @@ for i in range(0, 27):
             c.execute(sql)
 
             subdata.append(c.fetchall())
-            subdata[no-1] = np.array(subdata[no-1])
+            subdata[no-1] = np.array(subdata[no-1], dtype=np.float32)
         
     
         print('start', i, folder[i])
-        io.savemat('./mat/'+str(folder[i]+k)+'.mat', {'FR':subdata[0], 'BR':subdata[1], 'BL':subdata[2], 'TO':subdata[3]})
+        io.savemat('./data/mat/'+str(folder[i]+k)+'.mat', {'FR':subdata[0], 'BR':subdata[1], 'BL':subdata[2], 'TO':subdata[3]})
         print('end', i, folder[i])
         k+=2
