@@ -2,8 +2,8 @@ from sklearn import svm
 import numpy as np
 x = [4,3,2,1]
 
-print(x[2:3])
-
+t = '[123]'
+print(t[1:-1])
 
 
 # clf = svm.SVC()
