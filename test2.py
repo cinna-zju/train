@@ -36,7 +36,7 @@ for i in folder:
    
     accu.append(cnt/data_test.shape[0])
     print("test_folder: ", i, 'train sample: ', label.shape[0], 'test sample: ', label_test.shape[0])
-    print(confusion/np.sum(confusion))     
+    #print(confusion/np.sum(confusion))     
     print('accuracy: ', accu[-1])
 print('all', accu)
 print('average: ', np.mean(accu), 'std', np.std(accu))

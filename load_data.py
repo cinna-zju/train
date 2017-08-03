@@ -73,35 +73,40 @@ def get_data_7(num, folder):
             # get percentage of 9 emotion
             e = np.zeros(7)
             
-            emo_7 = (subdata[0][0:size, 2:3]+subdata[3][0:size, 2:3])/2
+            emo_7 = 0.45*subdata[0][0:size, 2:9]+0.55*subdata[3][0:size, 2:9]
             
-            emo_7 = np.hstack((emo_7, (subdata[0][0:size, 3:8]
-                +subdata[1][0:size, 3:8]
-                +subdata[2][0:size, 3:8]
-                )/3))
-            emo_7 = np.hstack((emo_7, (
-                subdata[0][0:size, 8:9]
-                +subdata[3][0:size, 8:9]
-                )/2))
+            # emo_7 = np.hstack((emo_7, ( # subdata[0][0:size, 3:8]
+            #     subdata[1][0:size, 3:8]
+            #     +subdata[2][0:size, 3:8]
+            #     )/2))
+            # emo_7 = np.hstack((emo_7, (
+            #     subdata[0][0:size, 8:9]
+            #     +subdata[3][0:size, 8:9]
+            #     )/2))
 
+            # emo_7 = (subdata[0][0:size, 2:9]
+            #     +subdata[1][0:size, 2:9]
+            #     +subdata[2][0:size, 2:9]
+            #     +subdata[3][0:size, 2:9]
+            # )
+            # emo_7 = 0.25*emo_7
             neu_value = np.zeros(1)
             for j in emo_7:
-                
                 t = j[0:7]
                 emo_max = np.argmax(t)
                 if t[emo_max] != 0:
                     #value = t[emo_max]
-                    e[emo_max] += t[emo_max]
+                    e[emo_max] += 100#t[emo_max]
                 else:
                     neu_value[0] += 1
             e = np.hstack((e/size, neu_value/size))
             # get val of a session
             
-            val =  0.4 * subdata[3][0:size,9]  + 0.1* subdata[1][0:size,9] + 0.1*subdata[2][0:size,9] + 0.4*subdata[3][0:size,9]
+            val =  0.5 * subdata[3][0:size,9]  + 0* subdata[1][0:size,9] + 0*subdata[2][0:size,9] + 0.5*subdata[3][0:size,9]
             val_arr = np.array([val[val==0].shape[0], val[val>0].shape[0], val[val<0].shape[0]])
             val_arr = val_arr/size
 
-            ega = 0.4 * subdata[3][0:size,10]  + 0.1* subdata[1][0:size,10] + 0.1*subdata[2][0:size,10] + 0.4*subdata[3][0:size,10]
+            ega = 0.5 * subdata[3][0:size,10]  + 0* subdata[1][0:size,10] + 0*subdata[2][0:size,10] + 0.5*subdata[3][0:size,10]
             ega_arr = np.array([ega[ega > 66].shape[0], 
                 size - ega[ega > 66].shape[0] - ega[ega<33].shape[0],
                 ega[ega<33].shape[0]])
